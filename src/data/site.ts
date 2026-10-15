@@ -2,7 +2,8 @@
 // All copy is transcribed from herraga.com (HTML text and text baked into images),
 // see _source/CONTENT.md.
 
-export const SITE_URL = 'https://herraga.com';
+// Canonical origin. herraga.com (apex) forwards here from GoDaddy; www is served by Cloudflare.
+export const SITE_URL = 'https://www.herraga.com';
 
 export const company = {
   name: 'HERRAGA',
