@@ -60,32 +60,7 @@ const pointIcons: Record<string, string> = {
                 ))}
               </ul>
             )}
-            {p.id === 'envios' ? (
-              <div class="dial">
-                <p class="dial-title">Llama a tu sucursal</p>
-                <ul class="dial-list">
-                  {branches.map((b) => (
-                    <li>
-                      <a href={telHref(b.phone)} aria-label={`Llamar a sucursal ${b.city}, ${formatPhone(b.phone)}`}>
-                        <Icon name="phone" />
-                        <span class="dial-city">{b.city}</span>
-                        <span class="dial-num">{formatPhone(b.phone)}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <div class="ctas">
-                  <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
-                    <Icon name="whatsapp" />
-                    <span>Atención nacional <span class="nowrap">{formatPhone(NATIONAL_PHONE)}</span></span>
-                  </a>
-                  <a class="btn btn--ghost" href={telHref(SERVICE_PHONE)}>
-                    <Icon name="headset" />
-                    <span>Servicio a clientes <span class="nowrap">{formatPhone(SERVICE_PHONE)}</span></span>
-                  </a>
-                </div>
-              </div>
-            ) : (
+            {p.id !== 'envios' && (
               <div class="ctas">
                 {p.cta.kind === 'whatsapp' ? (
                   <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
@@ -101,6 +76,38 @@ const pointIcons: Record<string, string> = {
               </div>
             )}
           </div>
+          {p.id === 'envios' && (
+            <div class="dial">
+              <h4 class="dial-title">Nuestras sucursales</h4>
+              <ul class="dial-list">
+                {branches.map((b) => (
+                  <li>
+                    <a href={telHref(b.phone)} aria-label={`Llamar a sucursal ${b.city}, ${formatPhone(b.phone)}`}>
+                      <span class="dial-icon" aria-hidden="true"><Icon name="store" /></span>
+                      <span class="dial-city">{b.city}<span>, {b.region}</span></span>
+                      <span class="dial-num"><Icon name="phone" />{formatPhone(b.phone)}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <div class="dial-bars">
+                <a class="bar bar--red" href={whatsappHref()} target="_blank" rel="noopener">
+                  <Icon name="whatsapp" />
+                  <span>
+                    <span class="bar-label">Atención nacional</span>
+                    <span class="bar-num">{formatPhone(NATIONAL_PHONE)}</span>
+                  </span>
+                </a>
+                <a class="bar bar--black" href={telHref(SERVICE_PHONE)}>
+                  <Icon name="headset" />
+                  <span>
+                    <span class="bar-label">Servicio a clientes</span>
+                    <span class="bar-num">{formatPhone(SERVICE_PHONE)}</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          )}
         </article>
       ))}
     </div>
@@ -156,81 +163,161 @@ const pointIcons: Record<string, string> = {
     gap: 0.75rem;
   }
 
-  /* Branch dial pad for the shipping pillar: each tile calls that branch. */
+  /* Shipping pillar footer: branch dial strip + contact bars, laid out like HERRAGA's shipping flyer. */
   .dial {
+    grid-column: 1 / -1;
     display: grid;
-    gap: 0.85rem;
-    width: 100%;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 14px;
+    background: var(--white);
+    box-shadow: inset 0 0 0 1px var(--paint-2), 0 20px 40px -28px rgb(4 29 39 / 0.5);
   }
   .dial-title {
-    font-family: var(--font-label);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 900;
+    text-align: center;
     text-transform: uppercase;
     color: var(--cab);
   }
   .dial-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
-    gap: 0.6rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .dial-list li + li {
+    border-left: 1px solid var(--paint-2);
   }
   .dial-list a {
     display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    column-gap: 0.65rem;
-    min-height: 3.5rem;
-    padding: 0.55rem 0.85rem;
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: inset 0 0 0 1px var(--paint-2), 0 2px 6px -3px rgb(4 29 39 / 0.25);
+    justify-items: center;
+    align-content: start;
+    gap: 0.35rem;
+    height: 100%;
+    padding: 0.6rem 0.5rem 0.75rem;
+    border-radius: 10px;
     color: var(--cab);
+    text-align: center;
     text-decoration: none;
-    transition:
-      box-shadow 160ms,
-      transform 160ms var(--ease-out);
+    transition: background-color 160ms;
   }
   .dial-list a:hover,
   .dial-list a:focus-visible {
-    box-shadow: inset 0 0 0 2px var(--red), 0 8px 16px -10px rgb(4 29 39 / 0.45);
-    transform: translateY(-1px);
+    background: var(--paint);
   }
-  .dial-list :global(svg) {
-    grid-row: span 2;
-    width: 2.1rem;
-    height: 2.1rem;
-    padding: 0.45rem;
+  .dial-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     background: var(--red);
     color: var(--white);
   }
+  .dial-icon :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
   .dial-city {
     font-family: var(--font-label);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    line-height: 1.1;
+    letter-spacing: 0.05em;
+    line-height: 1.15;
     text-transform: uppercase;
+  }
+  .dial-city span {
     color: var(--ink-soft);
   }
-  .nowrap {
+  .dial-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-label);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--red);
+  }
+  .dial-num :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+  .dial-bars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    color: var(--white);
+    text-decoration: none;
+    transition:
+      filter 160ms,
+      transform 160ms var(--ease-out);
+  }
+  .bar:hover,
+  .bar:focus-visible {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
+  .bar--red {
+    background: var(--red);
+  }
+  .bar--black {
+    background: #0b0f12;
+  }
+  .bar :global(svg) {
+    flex: none;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  .bar > span {
+    display: grid;
+    padding-left: 1rem;
+    border-left: 2px solid rgb(255 255 255 / 0.5);
+  }
+  .bar-label {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .bar-num {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 900;
+    line-height: 1;
     white-space: nowrap;
   }
-  @media (max-width: 520px) {
-    .dial .ctas .btn {
-      flex: 1 1 100%;
-      justify-content: center;
+  @media (max-width: 960px) {
+    .dial-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      row-gap: 0.5rem;
+    }
+    .dial-list li + li {
+      border-left: 0;
     }
   }
-  .dial-num {
-    font-family: var(--font-label);
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    line-height: 1.15;
-    white-space: nowrap;
+  @media (max-width: 640px) {
+    .dial {
+      padding: 1rem 0.75rem;
+    }
+    .dial-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .dial-bars {
+      grid-template-columns: 1fr;
+    }
   }
+
   h3 {
     font-size: var(--step-3);
     color: var(--cab);
