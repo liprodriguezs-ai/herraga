@@ -29,7 +29,7 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, SITE_URL).href;
-const ogImage = new URL('/og-herraga.jpg', SITE_URL).href;
+const ogImage = new URL('/og-herraga-2026.jpg', SITE_URL).href;
 
 const orgId = `${SITE_URL}/#organization`;
 
@@ -81,7 +81,7 @@ const jsonLd = {
         '@type': 'AutoPartsStore',
         name: `${company.brand} ${b.city}`,
         telephone: `+52${b.phone}`,
-        image: `${SITE_URL}/og-herraga.jpg`,
+        image: `${SITE_URL}/og-herraga-2026.jpg`,
         parentOrganization: { '@id': orgId },
         address: {
           '@type': 'PostalAddress',
