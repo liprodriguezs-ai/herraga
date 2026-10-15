@@ -91,7 +91,7 @@ export const pillars: Pillar[] = [
     title: 'Envíos a todo México',
     body: 'Contamos con envíos a todo México y disponibilidad inmediata en múltiples sucursales. Recibe tus refacciones cuando las necesitas.',
     image: 'envios',
-    imageAlt: 'Mapa de México con rutas de entrega de HERRAGA Refacciones, un tractocamión y cajas HERRAGA: llegamos a donde tu negocio nos necesite.',
+    imageAlt: 'Envíos a todo México: mapa con rutas de entrega, tractocamión y cajas de HERRAGA Refacciones. Cobertura nacional, envíos seguros y entregas rápidas.',
     lead: 'Llegamos a donde tu negocio nos necesite.',
     points: ['Cobertura nacional', 'Envíos seguros', 'Entregas rápidas'],
     cta: { label: 'Llamar', kind: 'tel' },
