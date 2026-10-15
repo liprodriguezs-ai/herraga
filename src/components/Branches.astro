@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import mapa from '../assets/sections/mapa.jpg';
+import BranchMap from './BranchMap.astro';
 import { branches, guarantees, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
 
 const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
@@ -15,15 +14,7 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
         Soluciones en refacciones diésel para que tu motor nunca se detenga. Disponibilidad inmediata en
         múltiples sucursales.
       </p>
-      <figure class="map">
-        <Image
-          src={mapa}
-          alt="Mapa de México con las sucursales de HERRAGA en Tijuana, Querétaro, Estado de México y CDMX."
-          widths={[400, 600]}
-          sizes="(max-width: 900px) 100vw, 40vw"
-          loading="lazy"
-        />
-      </figure>
+      <BranchMap />
     </div>
 
     <div class="list-wrap">
@@ -83,14 +74,6 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
     align-items: start;
   }
 
-  .map {
-    margin: var(--space-m) 0 0;
-  }
-  .map img {
-    width: 100%;
-    max-width: 34rem;
-    mix-blend-mode: multiply;
-  }
 
   .list-wrap {
     display: grid;
