@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import Filete from './Filete.astro';
-import { pillars, whatsappHref, telHref, NATIONAL_PHONE, formatPhone } from '../data/site';
+import { pillars, branches, whatsappHref, telHref, NATIONAL_PHONE, SERVICE_PHONE, formatPhone } from '../data/site';
 import garantia from '../assets/sections/garantia.jpg';
 import asesoria from '../assets/sections/asesoria.jpg';
 import envios from '../assets/sections/envios.jpg';
@@ -60,25 +60,46 @@ const pointIcons: Record<string, string> = {
                 ))}
               </ul>
             )}
-            <div class="ctas">
-              {p.cta.kind === 'whatsapp' ? (
-                <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
-                  <Icon name="whatsapp" />
-                  {p.cta.label}
-                </a>
-              ) : (
-                <a class="btn btn--ghost" href={telHref(NATIONAL_PHONE)}>
-                  <Icon name="phone" />
-                  {p.cta.label} {formatPhone(NATIONAL_PHONE)}
-                </a>
-              )}
-              {p.id === 'envios' && (
-                <a class="btn btn--primary" href="#sucursales">
-                  <Icon name="store" />
-                  Llama a tu sucursal
-                </a>
-              )}
-            </div>
+            {p.id === 'envios' ? (
+              <div class="dial">
+                <p class="dial-title">Llama a tu sucursal</p>
+                <ul class="dial-list">
+                  {branches.map((b) => (
+                    <li>
+                      <a href={telHref(b.phone)} aria-label={`Llamar a sucursal ${b.city}, ${formatPhone(b.phone)}`}>
+                        <Icon name="phone" />
+                        <span class="dial-city">{b.city}</span>
+                        <span class="dial-num">{formatPhone(b.phone)}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div class="ctas">
+                  <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
+                    <Icon name="whatsapp" />
+                    <span>Atención nacional <span class="nowrap">{formatPhone(NATIONAL_PHONE)}</span></span>
+                  </a>
+                  <a class="btn btn--ghost" href={telHref(SERVICE_PHONE)}>
+                    <Icon name="headset" />
+                    <span>Servicio a clientes <span class="nowrap">{formatPhone(SERVICE_PHONE)}</span></span>
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <div class="ctas">
+                {p.cta.kind === 'whatsapp' ? (
+                  <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
+                    <Icon name="whatsapp" />
+                    {p.cta.label}
+                  </a>
+                ) : (
+                  <a class="btn btn--ghost" href={telHref(NATIONAL_PHONE)}>
+                    <Icon name="phone" />
+                    {p.cta.label} {formatPhone(NATIONAL_PHONE)}
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </article>
       ))}
@@ -133,6 +154,82 @@ const pointIcons: Record<string, string> = {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  /* Branch dial pad for the shipping pillar: each tile calls that branch. */
+  .dial {
+    display: grid;
+    gap: 0.85rem;
+    width: 100%;
+  }
+  .dial-title {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cab);
+  }
+  .dial-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+    gap: 0.6rem;
+  }
+  .dial-list a {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 0.65rem;
+    min-height: 3.5rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: inset 0 0 0 1px var(--paint-2), 0 2px 6px -3px rgb(4 29 39 / 0.25);
+    color: var(--cab);
+    text-decoration: none;
+    transition:
+      box-shadow 160ms,
+      transform 160ms var(--ease-out);
+  }
+  .dial-list a:hover,
+  .dial-list a:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--red), 0 8px 16px -10px rgb(4 29 39 / 0.45);
+    transform: translateY(-1px);
+  }
+  .dial-list :global(svg) {
+    grid-row: span 2;
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0.45rem;
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--white);
+  }
+  .dial-city {
+    font-family: var(--font-label);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .nowrap {
+    white-space: nowrap;
+  }
+  @media (max-width: 520px) {
+    .dial .ctas .btn {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+  .dial-num {
+    font-family: var(--font-label);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.15;
+    white-space: nowrap;
   }
   h3 {
     font-size: var(--step-3);
