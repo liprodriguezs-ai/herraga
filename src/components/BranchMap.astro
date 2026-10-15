@@ -7,6 +7,22 @@ const byCity = Object.fromEntries(map.branches.map((b) => [b.city, b]));
 const valley = ['Huehuetoca', 'Cuautitlán Izcalli', 'CDMX'].map((c) => byCity[c]);
 const tijuana = byCity['Tijuana'];
 const queretaro = byCity['Querétaro'];
+
+// Valley of Mexico inset: the three branches sit ~20 km apart, so they get a magnified detail box
+// placed over open Pacific water (x 26–386, y 404–632 is sea in this projection).
+const inset = { x: 26, y: 404, w: 360, h: 228 };
+const ZOOM = 13;
+const centre = {
+  x: valley.reduce((s, b) => s + b.x, 0) / valley.length,
+  y: valley.reduce((s, b) => s + b.y, 0) / valley.length,
+};
+const anchor = { x: inset.x + 78, y: inset.y + 116 };
+const zoomed = valley.map((b) => ({
+  city: b.city,
+  x: Math.round((anchor.x + (b.x - centre.x) * ZOOM) * 10) / 10,
+  y: Math.round((anchor.y + (b.y - centre.y) * ZOOM) * 10) / 10,
+}));
+const zoomTransform = `translate(${anchor.x} ${anchor.y}) scale(${ZOOM}) translate(${-centre.x} ${-centre.y})`;
 ---
 
 <figure class="map">
@@ -15,6 +31,7 @@ const queretaro = byCity['Querétaro'];
     <desc id="map-desc">Sucursales en Tijuana, Baja California; Querétaro; Huehuetoca y Cuautitlán Izcalli, Estado de México; y Ciudad de México.</desc>
     <defs>
       <clipPath id="map-clip"><rect width="1000" height="660" rx="0" /></clipPath>
+      <clipPath id="inset-clip"><rect x="26" y="404" width="360" height="228" rx="10" /></clipPath>
       <radialGradient id="pin-glow">
         <stop offset="0" stop-color="#ffb22e" stop-opacity="0.55" />
         <stop offset="1" stop-color="#ffb22e" stop-opacity="0" />
@@ -34,15 +51,28 @@ const queretaro = byCity['Querétaro'];
     <g class="pin">
       <circle cx={queretaro.x} cy={queretaro.y} r="26" fill="url(#pin-glow)" />
       <circle cx={queretaro.x} cy={queretaro.y} r="10" class="dot" />
-      <text x={queretaro.x - 20} y={queretaro.y - 18} class="label" text-anchor="end">Querétaro</text>
+      <text x={queretaro.x} y={queretaro.y - 24} class="label" text-anchor="middle">Querétaro</text>
     </g>
 
     <g class="pin">
-      <circle cx={valley[1].x} cy={valley[1].y} r="34" fill="url(#pin-glow)" />
-      {valley.map((b) => <circle cx={b.x} cy={b.y} r="7.5" class="dot" />)}
-      <path d={`M${valley[2].x + 10} ${valley[2].y + 6} L${valley[2].x + 50} ${valley[2].y + 48}`} class="leader" />
-      <text x={valley[2].x + 56} y={valley[2].y + 62} class="label">CDMX y Edo. Méx.</text>
-      <text x={valley[2].x + 56} y={valley[2].y + 92} class="sublabel">3 sucursales</text>
+      <circle cx={centre.x} cy={centre.y} r="30" fill="url(#pin-glow)" />
+      {valley.map((b) => <circle cx={b.x} cy={b.y} r="6" class="dot" />)}
+    </g>
+
+    <path d={`M${centre.x - 10} ${centre.y + 8} L${inset.x + inset.w} ${inset.y}`} class="leader" />
+
+    <g class="inset">
+      <rect x={inset.x} y={inset.y} width={inset.w} height={inset.h} rx="10" class="inset-frame" />
+      <g clip-path="url(#inset-clip)">
+        <path d={map.mexico} transform={zoomTransform} class="mexico" vector-effect="non-scaling-stroke" />
+      </g>
+      <text x={inset.x + 4} y={inset.y - 12} class="sublabel">Valle de México</text>
+      {zoomed.map((b) => (
+        <g>
+          <circle cx={b.x} cy={b.y} r="11" class="dot" />
+          <text x={b.x + 20} y={b.y + 10} class="label label--sm">{b.city}</text>
+        </g>
+      ))}
     </g>
   </svg>
   <figcaption>Cobertura nacional con envíos a todo México desde 5 sucursales.</figcaption>
@@ -97,6 +127,18 @@ const queretaro = byCity['Querétaro'];
     stroke: #041d27;
     stroke-width: 5px;
     stroke-linejoin: round;
+  }
+  .label--sm {
+    font-size: 29px;
+    letter-spacing: 0.04em;
+  }
+  .inset-frame {
+    fill: #062634;
+    stroke: var(--amber);
+    stroke-width: 2.5;
+  }
+  .leader {
+    stroke-dasharray: 6 6;
   }
   .sublabel {
     font-family: var(--font-label);
