@@ -10,6 +10,7 @@ Static landing for [herraga.com](https://herraga.com), built with Astro 7. It re
 | `npm run dev` | Dev server at `http://localhost:4321` |
 | `npm run build` | Static build to `dist/` |
 | `npm run preview` | Serve the build locally |
+| `npm run deploy` | Publish `dist/` to the `herraga-landing` Worker (run `build` first) |
 | `npm run check:content` | Verify every text, phone and link from the original site exists in `dist/index.html` (run after `build`) |
 
 ## Deploy
@@ -20,10 +21,12 @@ Production runs on Cloudflare Workers (static assets) as the Worker `herraga-lan
 | --- | --- |
 | Repository | `liprodriguezs-ai/herraga` |
 | Production branch | `main` |
-| Build command | *(empty — the deploy script builds)* |
-| Deploy command | `npm run deploy` |
+| Build command | `npm run build` (builds only) |
+| Deploy command | `npm run deploy` (`wrangler deploy`, publishes only) |
 | Root directory | `/` |
-| Preview builds | off |
+| Builds for non-production branches | off |
+
+Each push to `main` therefore builds once and deploys once. Do not put a deploying script in the build command.
 
 `wrangler.jsonc` deliberately has no `routes` or custom domains; add domains in the dashboard (Worker → Domains). Node version for builds comes from `.node-version`.
 

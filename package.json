@@ -12,7 +12,7 @@
     "astro": "astro",
     "check:content": "node scripts/check-content.mjs",
     "build:map": "node scripts/build-map.mjs",
-    "deploy": "astro build && wrangler deploy"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
