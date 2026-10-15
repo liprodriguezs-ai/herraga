@@ -14,6 +14,19 @@ Static landing for [herraga.com](https://herraga.com), built with Astro 7. It re
 
 ## Deploy
 
+Production runs on Cloudflare Workers (static assets) as the Worker `herraga-landing`, auto-deployed by Workers Builds on every push to `main`. Dashboard settings for the Worker's Builds section:
+
+| Setting | Value |
+| --- | --- |
+| Repository | `liprodriguezs-ai/herraga` |
+| Production branch | `main` |
+| Build command | *(empty — the deploy script builds)* |
+| Deploy command | `npm run deploy` |
+| Root directory | `/` |
+| Preview builds | off |
+
+`wrangler.jsonc` deliberately has no `routes` or custom domains; add domains in the dashboard (Worker → Domains). Node version for builds comes from `.node-version`.
+
 `dist/` is plain static HTML/CSS/JS. Upload it to any static host (Cloudflare Pages/Workers static assets, Netlify, Vercel, or cPanel via FTP into `public_html`). `site` in `astro.config.mjs` is `https://herraga.com`, which drives the canonical URL, Open Graph URLs and the sitemap.
 
 ## Newsletter
