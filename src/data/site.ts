@@ -46,9 +46,9 @@ export const social = [
 
 export const nav = [
   { label: 'Motores', href: '#motores' },
+  { label: 'Sucursales', href: '#sucursales' },
   { label: 'Productos', href: '#productos' },
   { label: 'Marcas', href: '#marcas' },
-  { label: 'Sucursales', href: '#sucursales' },
   { label: 'Cotizar', href: '#cotizar' },
 ];
 
@@ -87,16 +87,6 @@ export const pillars: Pillar[] = [
     cta: { label: 'Solicita cotización', kind: 'whatsapp' },
   },
   {
-    id: 'envios',
-    title: 'Envíos a todo México',
-    body: 'Contamos con envíos a todo México y disponibilidad inmediata en múltiples sucursales. Recibe tus refacciones cuando las necesitas.',
-    image: 'envios',
-    imageAlt: 'Envíos a todo México: mapa con rutas de entrega, tractocamión y cajas de HERRAGA Refacciones. Cobertura nacional, envíos seguros y entregas rápidas.',
-    lead: 'Llegamos a donde tu negocio nos necesite.',
-    points: ['Cobertura nacional', 'Envíos seguros', 'Entregas rápidas'],
-    cta: { label: 'Llamar', kind: 'tel' },
-  },
-  {
     id: 'pagos',
     title: 'Formas de pago',
     body: 'Ofrecemos múltiples formas de pago para tu comodidad y rapidez en cada compra. Elige la opción que mejor se adapte a tus necesidades y asegura tus refacciones sin complicaciones.',
@@ -104,6 +94,16 @@ export const pillars: Pillar[] = [
     imageAlt: 'Pago con celular, tarjeta y efectivo en HERRAGA Refacciones.',
     lead: '¡Aceptamos todos los medios de pago!',
     points: ['Pago con tarjeta', 'Transferencia bancaria', 'Link de pago', 'Efectivo'],
+    cta: { label: 'Llamar', kind: 'tel' },
+  },
+  {
+    id: 'envios',
+    title: 'Envíos a todo México',
+    body: 'Contamos con envíos a todo México y disponibilidad inmediata en múltiples sucursales. Recibe tus refacciones cuando las necesitas.',
+    image: 'envios',
+    imageAlt: 'Envíos a todo México: mapa con rutas de entrega, tractocamión y cajas de HERRAGA Refacciones. Cobertura nacional, envíos seguros y entregas rápidas.',
+    lead: 'Llegamos a donde tu negocio nos necesite.',
+    points: ['Cobertura nacional', 'Envíos seguros', 'Entregas rápidas'],
     cta: { label: 'Llamar', kind: 'tel' },
   },
 ];
