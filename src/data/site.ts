@@ -21,8 +21,15 @@ export const company = {
 // National line (also WhatsApp). Digits only, without country code.
 export const NATIONAL_PHONE = '6645149674';
 
+// Customer service line (from HERRAGA's 2026 shipping flyer).
+export const SERVICE_PHONE = '5519595959';
+
+// Mexican 10-digit numbers: two-digit area codes (CDMX/Edo. Méx. 55 and 56, Guadalajara 33, Monterrey 81)
+// read 2-4-4; every other area code reads 3-3-4.
 export const formatPhone = (digits: string) =>
-  `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+  /^(55|56|33|81)/.test(digits)
+    ? `${digits.slice(0, 2)} ${digits.slice(2, 6)} ${digits.slice(6)}`
+    : `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
 
 export const telHref = (digits: string) => `tel:+52${digits}`;
 
@@ -84,7 +91,7 @@ export const pillars: Pillar[] = [
     title: 'Envíos a todo México',
     body: 'Contamos con envíos a todo México y disponibilidad inmediata en múltiples sucursales. Recibe tus refacciones cuando las necesitas.',
     image: 'envios',
-    imageAlt: 'Mapa de México con rutas de envío de HERRAGA Refacciones Diésel.',
+    imageAlt: 'Envíos a todo México: mapa con rutas de entrega, tractocamión y cajas de HERRAGA Refacciones. Cobertura nacional, envíos seguros y entregas rápidas.',
     lead: 'Llegamos a donde tu negocio nos necesite.',
     points: ['Cobertura nacional', 'Envíos seguros', 'Entregas rápidas'],
     cta: { label: 'Llamar', kind: 'tel' },

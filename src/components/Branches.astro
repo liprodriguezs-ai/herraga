@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import BranchMap from './BranchMap.astro';
-import { branches, guarantees, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
+import { branches, guarantees, NATIONAL_PHONE, SERVICE_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
 
 const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
 ---
@@ -22,27 +22,49 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
         {branches.map((b) => (
           <li class="branch">
             <span class="badge" aria-hidden="true"><Icon name="store" /></span>
-            <div>
+            <div class="who">
               <h3>{b.city}<span>, {b.region}</span></h3>
-              <a href={telHref(b.phone)}>
-                <Icon name="phone" />
-                {formatPhone(b.phone)}
-              </a>
+              <a class="number" href={telHref(b.phone)}>{formatPhone(b.phone)}</a>
             </div>
+            <a class="call" href={telHref(b.phone)} aria-label={`Llamar a sucursal ${b.city}, ${formatPhone(b.phone)}`}>
+              <Icon name="phone" />
+              Llamar
+            </a>
           </li>
         ))}
       </ul>
 
-      <div class="national">
-        <span class="badge" aria-hidden="true"><Icon name="headset" /></span>
-        <div>
-          <h3>Atención nacional</h3>
-          <a href={telHref(NATIONAL_PHONE)}>{formatPhone(NATIONAL_PHONE)}</a>
+      <div class="lines">
+        <div class="line">
+          <span class="badge" aria-hidden="true"><Icon name="whatsapp" /></span>
+          <div class="who">
+            <h3>Atención nacional</h3>
+            <a class="number big" href={telHref(NATIONAL_PHONE)}>{formatPhone(NATIONAL_PHONE)}</a>
+          </div>
+          <div class="actions">
+            <a class="btn btn--primary btn--sm" href={whatsappHref()} target="_blank" rel="noopener">
+              <Icon name="whatsapp" />
+              WhatsApp
+            </a>
+            <a class="call" href={telHref(NATIONAL_PHONE)} aria-label={`Llamar a atención nacional, ${formatPhone(NATIONAL_PHONE)}`}>
+              <Icon name="phone" />
+              Llamar
+            </a>
+          </div>
         </div>
-        <a class="btn btn--primary btn--sm" href={whatsappHref()} target="_blank" rel="noopener">
-          <Icon name="whatsapp" />
-          WhatsApp
-        </a>
+        <div class="line line--dark">
+          <span class="badge badge--dark" aria-hidden="true"><Icon name="headset" /></span>
+          <div class="who">
+            <h3>Servicio a clientes</h3>
+            <a class="number big" href={telHref(SERVICE_PHONE)}>{formatPhone(SERVICE_PHONE)}</a>
+          </div>
+          <div class="actions">
+            <a class="call" href={telHref(SERVICE_PHONE)} aria-label={`Llamar a servicio a clientes, ${formatPhone(SERVICE_PHONE)}`}>
+              <Icon name="phone" />
+              Llamar
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -88,10 +110,20 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
     display: grid;
   }
   .branch,
-  .national {
+  .line {
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+  .who {
+    flex: 1;
+    min-width: 0;
+  }
+  .line .who {
+    flex: 1 1 13rem;
+  }
+  .number {
+    white-space: nowrap;
   }
   .branch {
     padding-block: 1rem;
@@ -121,43 +153,104 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
   h3 span {
     color: #9fb0b8;
   }
-  .branch a,
-  .national a:not(.btn) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
+  .number {
+    display: inline-block;
     margin-top: 0.15rem;
     font-family: var(--font-label);
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 700;
     letter-spacing: 0.05em;
     color: var(--amber);
     text-decoration: none;
   }
-  .branch a :global(svg) {
-    width: 1rem;
-    height: 1rem;
-  }
-  .branch a:hover,
-  .national a:not(.btn):hover {
+  .number:hover {
     color: var(--amber-hot);
     text-decoration: underline;
   }
-  .national {
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
-    padding: 1rem;
-    border-radius: 10px;
-    background: rgb(255 255 255 / 0.06);
-  }
-  .national a:not(.btn) {
+  .number.big {
     font-family: var(--font-display);
     font-size: var(--step-2);
     font-weight: 900;
+    letter-spacing: 0.02em;
     color: var(--white);
   }
-  .national .btn {
+
+  /* Call button: amber outline pill, 44px+ tap target. */
+  .call {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 2px var(--amber);
+    color: var(--amber);
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background-color 160ms,
+      color 160ms;
+  }
+  .call:hover,
+  .call:focus-visible {
+    background: var(--amber);
+    color: var(--cab-deep);
+  }
+  .call :global(svg) {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .lines {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  .line {
+    flex-wrap: wrap;
+    padding: 1rem;
+    border-radius: 10px;
+    background: var(--red);
+  }
+  .line--dark {
+    background: rgb(255 255 255 / 0.06);
+  }
+  .line .badge {
+    background: var(--white);
+    color: var(--red);
+  }
+  .line .badge--dark {
+    background: var(--red);
+    color: var(--white);
+  }
+  .line h3 {
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
     margin-left: auto;
+  }
+  .line:not(.line--dark) .call {
+    box-shadow: inset 0 0 0 2px var(--white);
+    color: var(--white);
+  }
+  .line:not(.line--dark) .call:hover,
+  .line:not(.line--dark) .call:focus-visible {
+    background: var(--white);
+    color: var(--red);
+  }
+  .line:not(.line--dark) .btn {
+    --btn-bg: var(--white);
+    --btn-fg: var(--red);
   }
 
   .strip {
@@ -226,10 +319,14 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
       padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
     }
   }
-  @media (max-width: 420px) {
-    .national .btn {
-      margin-left: 0;
+  @media (max-width: 480px) {
+    .actions {
       width: 100%;
+      margin-left: 0;
+    }
+    .actions > * {
+      flex: 1;
+      justify-content: center;
     }
   }
 </style>

@@ -2,7 +2,7 @@
 import Icon from './Icon.astro';
 import Filete from './Filete.astro';
 import logoDark from '../assets/brand/logo-dark.svg?url';
-import { company, nav, social, branches, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
+import { company, nav, social, branches, NATIONAL_PHONE, SERVICE_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
 
 // Newsletter block is hidden for now (client request). Set to true to show it again.
 const SHOW_NEWSLETTER = false;
@@ -78,6 +78,7 @@ const year = new Date().getFullYear();
               <Icon name="whatsapp" /> Escríbenos por WhatsApp
             </a>
           </li>
+          <li>Servicio a clientes · <a href={telHref(SERVICE_PHONE)}>{formatPhone(SERVICE_PHONE)}</a></li>
         </ul>
       </div>
     </div>

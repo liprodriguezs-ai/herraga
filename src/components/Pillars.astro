@@ -60,17 +60,25 @@ const pointIcons: Record<string, string> = {
                 ))}
               </ul>
             )}
-            {p.cta.kind === 'whatsapp' ? (
-              <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
-                <Icon name="whatsapp" />
-                {p.cta.label}
-              </a>
-            ) : (
-              <a class="btn btn--ghost" href={telHref(NATIONAL_PHONE)}>
-                <Icon name="phone" />
-                {p.cta.label} {formatPhone(NATIONAL_PHONE)}
-              </a>
-            )}
+            <div class="ctas">
+              {p.cta.kind === 'whatsapp' ? (
+                <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
+                  <Icon name="whatsapp" />
+                  {p.cta.label}
+                </a>
+              ) : (
+                <a class="btn btn--ghost" href={telHref(NATIONAL_PHONE)}>
+                  <Icon name="phone" />
+                  {p.cta.label} {formatPhone(NATIONAL_PHONE)}
+                </a>
+              )}
+              {p.id === 'envios' && (
+                <a class="btn btn--primary" href="#sucursales">
+                  <Icon name="store" />
+                  Llama a tu sucursal
+                </a>
+              )}
+            </div>
           </div>
         </article>
       ))}
@@ -120,6 +128,11 @@ const pointIcons: Record<string, string> = {
     display: grid;
     justify-items: start;
     gap: 1rem;
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
   h3 {
     font-size: var(--step-3);

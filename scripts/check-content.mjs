@@ -48,7 +48,7 @@ const required = [
   'Atención nacional', 'Calidad garantizada', 'Experiencia y confianza',
   'Refacciones diésel de calidad, donde y cuando las necesitas',
   // Phones
-  '664 514 9674', '551 369 4968', '557 479 7258', '441 390 3098', '663 203 4335',
+  '664 514 9674', '55 1369 4968', '55 7479 7258', '441 390 3098', '663 203 4335', '55 1959 5959',
   // Branches
   'CDMX', 'Cuautitlán Izcalli', 'Huehuetoca', 'Querétaro', 'Tijuana',
   // Engine codes
