@@ -27,8 +27,7 @@ const required = [
   'Cotiza con un asesor especializado',
   'Habla con un asesor',
   'Solicita cotización',
-  'Suscríbete para recibir actualizaciones, promociones y mucho más',
-  'Correo electrónico',
+  // The newsletter ("Suscríbete…", "Correo electrónico") is hidden on request; see SHOW_NEWSLETTER in Footer.astro.
   'HERRAGA S. de R.L. de C.V.',
   'Todos los derechos reservados',
   // Hero banner

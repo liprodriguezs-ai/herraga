@@ -5,12 +5,15 @@ import Filete from './Filete.astro';
 import logoDark from '../assets/brand/logo-dark.png';
 import { company, nav, social, branches, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
 
+// Newsletter block is hidden for now (client request). Set to true to show it again.
+const SHOW_NEWSLETTER = false;
 const endpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? '';
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
   <div class="wrap">
+    {SHOW_NEWSLETTER && (<>
     <section class="newsletter" aria-labelledby="news-title">
       <div>
         <h2 id="news-title">Suscríbete</h2>
@@ -32,6 +35,7 @@ const year = new Date().getFullYear();
     </section>
 
     <Filete tone="chrome" />
+    </>)}
 
     <div class="cols">
       <div class="brand">
@@ -149,7 +153,7 @@ const year = new Date().getFullYear();
 
 <style>
   .footer {
-    padding-block: var(--space-xl) var(--space-m);
+    padding-block: var(--space-m);
     background: var(--cab-deep);
     color: #c9d6dc;
   }
