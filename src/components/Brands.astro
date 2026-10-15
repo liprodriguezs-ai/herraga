@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import ChromeLetters from './ChromeLetters.astro';
 import { engineBrands, partBrands } from '../data/site';
 
 // Logos cropped from HERRAGA's own catalog slide (_source/img/cat-sitio-web.jpg) and, for IPD, the hero banner.
@@ -19,10 +18,7 @@ const groups = [
 
 <section id="marcas" class="brands" aria-labelledby="marcas-title">
   <div class="wrap">
-    <h2 id="marcas-title" class="section-title">
-      <span class="visually-hidden">Las mejores marcas</span>
-      <ChromeLetters class="title-art" lines={['LAS MEJORES MARCAS']} width={1290} size={150} style="--title-art-max: 52rem" />
-    </h2>
+    <h2 id="marcas-title" class="visually-hidden">Marcas</h2>
 
     <div class="groups">
       {groups.map((g) => (
@@ -61,7 +57,6 @@ const groups = [
   .groups {
     display: grid;
     gap: var(--space-l);
-    margin-top: var(--space-l);
   }
   h3 {
     margin-bottom: 1.2rem;
