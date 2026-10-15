@@ -1,6 +1,8 @@
 ---
-// Chrome trim lettering rendered as SVG: horizon-band chrome fill, specular bevel,
-// dark outline and cast shadow. Decorative only; callers keep the live text in the DOM.
+// Chrome trim lettering rendered as SVG. The material is built from flat stacked layers only —
+// cast shadow, dark outline, light top edge, horizon-band chrome fill and a diagonal sheen —
+// so it rasterizes once and never runs per-pixel SVG filters (costly on Safari and while animating).
+// Decorative only; callers keep the live text in the DOM.
 interface Props {
   lines: string[];
   class?: string;
@@ -14,7 +16,8 @@ const { lines, class: className, style, width = 1000, size = 150, lineHeight = 0
 const uid = `cl${Math.abs([...lines.join('')].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)).toString(36)}`;
 const step = size * lineHeight;
 const top = size * 0.98;
-const height = Math.ceil(top + step * (lines.length - 1) + size * 0.12);
+const height = Math.ceil(top + step * (lines.length - 1) + size * 0.14);
+const rows = lines.map((l, i) => ({ text: l, y: top + i * step }));
 ---
 
 <svg
@@ -36,17 +39,14 @@ const height = Math.ceil(top + step * (lines.length - 1) + size * 0.12);
       <stop offset="0.9" stop-color="#ebe6de" />
       <stop offset="1" stop-color="#fdfeff" />
     </linearGradient>
-    <filter id={`${uid}-bevel`} x="-5%" y="-10%" width="110%" height="125%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b" />
-      <feSpecularLighting in="b" surfaceScale="4" specularConstant="1.25" specularExponent="22" lighting-color="#ffffff" result="s">
-        <fePointLight x={width * 0.3} y="-200" z="300" />
-      </feSpecularLighting>
-      <feComposite in="s" in2="SourceAlpha" operator="in" result="sc" />
-      <feComposite in="SourceGraphic" in2="sc" operator="arithmetic" k2="1" k3="0.9" />
-    </filter>
-    <filter id={`${uid}-shadow`} x="-5%" y="-10%" width="110%" height="140%">
-      <feDropShadow dx="0" dy={size * 0.05} stdDeviation={size * 0.06} flood-color="#000" flood-opacity="0.6" />
-    </filter>
+    <linearGradient id={`${uid}-sheen`} x1="0" y1="0" x2={width} y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0.14" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="0.22" stop-color="#ffffff" stop-opacity="0.5" />
+      <stop offset="0.28" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="0.64" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="0.68" stop-color="#ffffff" stop-opacity="0.32" />
+      <stop offset="0.72" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
   </defs>
   <g
     font-family="'Big Shoulders Display Variable', 'Barlow Condensed', sans-serif"
@@ -54,11 +54,25 @@ const height = Math.ceil(top + step * (lines.length - 1) + size * 0.12);
     font-size={size}
     letter-spacing="1"
   >
-    <g filter={`url(#${uid}-shadow)`} fill="#02151d" stroke="#02151d" stroke-width={size * 0.06} stroke-linejoin="round">
-      {lines.map((l, i) => <text x="4" y={top + i * step}>{l}</text>)}
+    <!-- Cast shadow: two offset copies instead of a blur filter. -->
+    <g fill="#000" fill-opacity="0.32" stroke="#000" stroke-opacity="0.32" stroke-width={size * 0.08} stroke-linejoin="round">
+      {rows.map((r) => <text x="4" y={r.y + size * 0.075}>{r.text}</text>)}
     </g>
-    <g fill={`url(#${uid}-fill)`} filter={`url(#${uid}-bevel)`}>
-      {lines.map((l, i) => <text x="4" y={top + i * step}>{l}</text>)}
+    <!-- Dark outline. -->
+    <g fill="#02151d" stroke="#02151d" stroke-width={size * 0.06} stroke-linejoin="round">
+      {rows.map((r) => <text x="4" y={r.y}>{r.text}</text>)}
+    </g>
+    <!-- Polished top edge: a light copy nudged up, left visible as a bevel highlight. -->
+    <g fill="#ffffff" fill-opacity="0.85">
+      {rows.map((r) => <text x="4" y={r.y - size * 0.018}>{r.text}</text>)}
+    </g>
+    <!-- Chrome face. -->
+    <g fill={`url(#${uid}-fill)`}>
+      {rows.map((r) => <text x="4" y={r.y}>{r.text}</text>)}
+    </g>
+    <!-- Diagonal sheen across the face. -->
+    <g fill={`url(#${uid}-sheen)`}>
+      {rows.map((r) => <text x="4" y={r.y}>{r.text}</text>)}
     </g>
   </g>
 </svg>

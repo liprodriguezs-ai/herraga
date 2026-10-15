@@ -6,5 +6,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://herraga.com',
   output: 'static',
+  // Single-page site: inline all CSS into the HTML so no stylesheet blocks the first paint.
+  build: { inlineStylesheets: 'always' },
   integrations: [sitemap()],
 });

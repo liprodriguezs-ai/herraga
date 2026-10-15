@@ -42,6 +42,7 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     </div>
 
     <div class="grille" aria-hidden="true">
+      <img class="grille-art" src="/grille.svg" alt="" width="400" height="500" fetchpriority="high" decoding="async" />
       <div class="emblem">
         <Image src={logoDark} alt="" width={260} height={170} loading="eager" />
         <span class="emblem-values">{company.values.join(' · ')}</span>
@@ -122,19 +123,17 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     max-width: 44rem;
     height: auto;
     overflow: visible;
-    animation: polish 1100ms var(--ease-out) 700ms both;
+    /* Compositor-only entrance (opacity + transform): no repaint while it plays. */
+    animation: nameplate 900ms var(--ease-out) 600ms both;
   }
-  @keyframes polish {
+  @keyframes nameplate {
     from {
-      filter: brightness(0.55) saturate(0.6);
-      clip-path: inset(0 100% 0 0);
-    }
-    60% {
-      filter: brightness(1.25);
+      opacity: 0;
+      transform: translateY(14px);
     }
     to {
-      filter: brightness(1);
-      clip-path: inset(0 0 0 0);
+      opacity: 1;
+      transform: none;
     }
   }
   .subline {
@@ -197,8 +196,17 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     max-width: 30rem;
     justify-self: end;
     border-radius: 26px;
-    background: url('/grille.svg') center / 100% 100% no-repeat;
-    filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.65));
+    /* box-shadow instead of filter: drop-shadow — same look on this rounded shape, no filter pass. */
+    box-shadow: 0 30px 50px -18px rgb(0 0 0 / 0.75);
+  }
+  /* The grille is a real <img> in the HTML (high fetch priority, preloaded) because it is the LCP element. */
+  .grille-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 26px;
+    object-fit: fill;
   }
   .emblem {
     position: absolute;
@@ -284,7 +292,9 @@ import { heroBrands, whatsappHref, company } from '../data/site';
       max-width: none;
       aspect-ratio: auto;
       height: 10rem;
-      background-size: cover;
+    }
+    .grille-art {
+      object-fit: cover;
     }
     .emblem {
       width: auto;
