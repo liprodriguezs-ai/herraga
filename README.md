@@ -61,7 +61,7 @@ Google Tag Manager (container `GTM_ID` in `src/data/site.ts`) loads on every pag
 | `quote_form_submit` | The quote form passes validation and opens WhatsApp | `channel` |
 | `contact_form_submit` | The floating contact form is sent | `channel` (`whatsapp` or `email`), `subscribe` |
 
-In GTM, create a Custom Event trigger per event name and a GA4 Event tag for each, then mark them as key events in GA4.
+GA4 property `www.herraga.com` (account "Herraga", measurement ID `G-0NS1JNJDLC`) receives them through GTM container version 2 "GA4 + eventos de contacto". `scripts/gtm/herraga-gtm-import.json` holds that setup (Google tag, one GA4 Event tag + Custom Event trigger per event, Data Layer variables); to rebuild it, use GTM → Admin → Import container → Merge. Mark the four events as key events in GA4 (Admin → Events → star) once they appear there.
 
 ## Editing content
 

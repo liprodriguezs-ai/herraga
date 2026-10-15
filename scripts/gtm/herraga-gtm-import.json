@@ -1,0 +1,223 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-10-15 08:30:00",
+  "containerVersion": {
+    "path": "accounts/0/containers/0/versions/0",
+    "accountId": "0",
+    "containerId": "0",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/0/containers/0",
+      "accountId": "0",
+      "containerId": "0",
+      "name": "www.herraga.com",
+      "publicId": "GTM-T7RF9SK2",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "1",
+        "name": "GA4 - Google tag",
+        "type": "googtag",
+        "parameter": [{ "type": "TEMPLATE", "key": "tagId", "value": "{{GA4 Measurement ID}}" }],
+        "firingTriggerId": ["2147479553"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "2",
+        "name": "GA4 - whatsapp_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "eventName", "value": "whatsapp_click" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{GA4 Measurement ID}}" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "link_location" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - link_location}}" }
+              ] },
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "link_text" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - link_text}}" }
+              ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["101"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "3",
+        "name": "GA4 - phone_click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "eventName", "value": "phone_click" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{GA4 Measurement ID}}" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "link_location" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - link_location}}" }
+              ] },
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "phone_number" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - phone_number}}" }
+              ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["102"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "4",
+        "name": "GA4 - quote_form_submit",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "eventName", "value": "quote_form_submit" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{GA4 Measurement ID}}" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "channel" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - channel}}" }
+              ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["103"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "tagId": "5",
+        "name": "GA4 - contact_form_submit",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "eventName", "value": "contact_form_submit" },
+          { "type": "TEMPLATE", "key": "measurementIdOverride", "value": "{{GA4 Measurement ID}}" },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "channel" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - channel}}" }
+              ] },
+              { "type": "MAP", "map": [
+                { "type": "TEMPLATE", "key": "parameter", "value": "subscribe" },
+                { "type": "TEMPLATE", "key": "parameterValue", "value": "{{DLV - subscribe}}" }
+              ] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["104"],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "0", "containerId": "0", "triggerId": "101",
+        "name": "CE - whatsapp_click", "type": "CUSTOM_EVENT",
+        "customEventFilter": [{ "type": "EQUALS", "parameter": [
+          { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+          { "type": "TEMPLATE", "key": "arg1", "value": "whatsapp_click" }
+        ] }]
+      },
+      {
+        "accountId": "0", "containerId": "0", "triggerId": "102",
+        "name": "CE - phone_click", "type": "CUSTOM_EVENT",
+        "customEventFilter": [{ "type": "EQUALS", "parameter": [
+          { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+          { "type": "TEMPLATE", "key": "arg1", "value": "phone_click" }
+        ] }]
+      },
+      {
+        "accountId": "0", "containerId": "0", "triggerId": "103",
+        "name": "CE - quote_form_submit", "type": "CUSTOM_EVENT",
+        "customEventFilter": [{ "type": "EQUALS", "parameter": [
+          { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+          { "type": "TEMPLATE", "key": "arg1", "value": "quote_form_submit" }
+        ] }]
+      },
+      {
+        "accountId": "0", "containerId": "0", "triggerId": "104",
+        "name": "CE - contact_form_submit", "type": "CUSTOM_EVENT",
+        "customEventFilter": [{ "type": "EQUALS", "parameter": [
+          { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+          { "type": "TEMPLATE", "key": "arg1", "value": "contact_form_submit" }
+        ] }]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "0", "containerId": "0", "variableId": "201",
+        "name": "GA4 Measurement ID", "type": "c",
+        "parameter": [{ "type": "TEMPLATE", "key": "value", "value": "G-0NS1JNJDLC" }]
+      },
+      {
+        "accountId": "0", "containerId": "0", "variableId": "202",
+        "name": "DLV - link_location", "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "link_location" }
+        ]
+      },
+      {
+        "accountId": "0", "containerId": "0", "variableId": "203",
+        "name": "DLV - link_text", "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "link_text" }
+        ]
+      },
+      {
+        "accountId": "0", "containerId": "0", "variableId": "204",
+        "name": "DLV - phone_number", "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "phone_number" }
+        ]
+      },
+      {
+        "accountId": "0", "containerId": "0", "variableId": "205",
+        "name": "DLV - channel", "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "channel" }
+        ]
+      },
+      {
+        "accountId": "0", "containerId": "0", "variableId": "206",
+        "name": "DLV - subscribe", "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "BOOLEAN", "key": "setDefaultValue", "value": "false" },
+          { "type": "TEMPLATE", "key": "name", "value": "subscribe" }
+        ]
+      }
+    ],
+    "builtInVariable": [
+      { "accountId": "0", "containerId": "0", "type": "EVENT", "name": "Event" }
+    ]
+  }
+}
