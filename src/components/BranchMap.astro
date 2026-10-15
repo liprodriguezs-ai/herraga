@@ -14,11 +14,13 @@ const edomex = {
   y: (byCity['Cuautitlán Izcalli'].y + byCity['Huehuetoca'].y) / 2,
 };
 
-const pins = [
+// Edo. Méx. and CDMX sit a few pixels apart, so their labels fan out to the east with leader lines.
+type Pin = { x: number; y: number; label: string; lx: number; ly: number; anchor: string; leader?: boolean };
+const pins: Pin[] = [
   { ...tijuana, label: 'Tijuana', lx: tijuana.x + 20, ly: tijuana.y + 34, anchor: 'start' },
   { ...queretaro, label: 'Querétaro', lx: queretaro.x - 18, ly: queretaro.y - 16, anchor: 'end' },
-  { ...edomex, label: 'Edo. Méx.', lx: edomex.x + 18, ly: edomex.y - 8, anchor: 'start' },
-  { ...cdmx, label: 'CDMX', lx: cdmx.x, ly: cdmx.y + 46, anchor: 'middle' },
+  { ...edomex, label: 'Edo. Méx.', lx: edomex.x + 78, ly: edomex.y - 44, anchor: 'start', leader: true },
+  { ...cdmx, label: 'CDMX', lx: cdmx.x + 78, ly: cdmx.y + 58, anchor: 'start', leader: true },
 ];
 ---
 
@@ -38,6 +40,9 @@ const pins = [
       <path d={map.mexico} class="mexico" />
     </g>
 
+    {pins.filter((p) => p.leader).map((p) => (
+      <polyline points={`${p.x},${p.y} ${p.lx - 30},${p.ly - 10} ${p.lx - 8},${p.ly - 10}`} class="leader" />
+    ))}
     {pins.map((p) => <circle cx={p.x} cy={p.y} r="26" fill="url(#pin-glow)" />)}
     {pins.map((p) => <circle cx={p.x} cy={p.y} r="8" class="dot" />)}
     {pins.map((p) => (
@@ -74,6 +79,11 @@ const pins = [
     stroke: #8fb3c2;
     stroke-width: 1.4;
     stroke-linejoin: round;
+  }
+  .leader {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.7);
+    stroke-width: 2;
   }
   .dot {
     fill: var(--red-bright);

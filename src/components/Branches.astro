@@ -51,9 +51,8 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
           <p class="line-label">Servicio a clientes</p>
           <a class="line-number" href={telHref(SERVICE_PHONE)}>{formatPhone(SERVICE_PHONE)}</a>
           <div class="line-actions">
-            <a class="call-link" href={telHref(SERVICE_PHONE)} aria-label={`Llamar a servicio a clientes, ${formatPhone(SERVICE_PHONE)}`}>
+            <a class="dial dial--btn" href={telHref(SERVICE_PHONE)} aria-label={`Llamar a servicio a clientes, ${formatPhone(SERVICE_PHONE)}`}>
               <Icon name="phone" />
-              Llamar
             </a>
           </div>
         </div>
@@ -90,6 +89,7 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
 
 
   .list-wrap {
+    align-self: end;
     display: grid;
     gap: 1.25rem;
     padding: clamp(1rem, 2.5vw, 1.75rem);
@@ -130,8 +130,9 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
     font-family: var(--font-label);
     font-size: 1.3rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
     line-height: 1.1;
+    text-transform: uppercase;
   }
   .region {
     font-size: 0.95rem;
@@ -185,10 +186,13 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
     padding: 1rem 1.1rem 1.1rem;
     border-radius: 10px;
     background: rgb(255 255 255 / 0.05);
-    box-shadow: inset 0 3px 0 rgb(255 255 255 / 0.18);
   }
   .line--main {
-    box-shadow: inset 0 3px 0 var(--red);
+    background: linear-gradient(135deg, rgb(192 16 31 / 0.32), rgb(192 16 31 / 0.12));
+    box-shadow: inset 0 0 0 1px rgb(255 59 71 / 0.35);
+  }
+  .line--main .line-label {
+    color: #ffb3b8;
   }
   .line-label {
     font-family: var(--font-label);
@@ -217,28 +221,6 @@ const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
     gap: 0.6rem;
     margin-top: 0.4rem;
   }
-  .call-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    min-height: 2.6rem;
-    font-family: var(--font-label);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--amber);
-    text-decoration: none;
-  }
-  .call-link:hover {
-    color: var(--amber-hot);
-    text-decoration: underline;
-  }
-  .call-link :global(svg) {
-    width: 1.05rem;
-    height: 1.05rem;
-  }
-
   .strip {
     margin-top: var(--space-xl);
     background: var(--cab);
