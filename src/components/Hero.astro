@@ -2,11 +2,23 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import ChromeLetters from './ChromeLetters.astro';
-import logoDark from '../assets/brand/logo-dark.png';
-import { heroBrands, whatsappHref, company } from '../data/site';
+import cabPhoto from '../assets/hero/cab-duotone.jpg';
+import { heroBrands, whatsappHref } from '../data/site';
 ---
 
 <section id="inicio" class="hero" aria-labelledby="hero-title">
+  <!-- Cab from the original banner, tinted to the brand navy. Only a 560 px crop was usable, so it is
+       softened on purpose; replace the file with the original truck photo for a sharper result. -->
+  <Image
+    class="backdrop"
+    src={cabPhoto}
+    alt=""
+    widths={[720, 1080, 1440]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+
   <div class="lights" aria-hidden="true">
     {Array.from({ length: 5 }).map((_, i) => <span class="light" style={`--i:${i}`} />)}
   </div>
@@ -40,14 +52,6 @@ import { heroBrands, whatsappHref, company } from '../data/site';
         </a>
       </div>
     </div>
-
-    <div class="grille" aria-hidden="true">
-      <img class="grille-art" src="/grille.svg" alt="" width="480" height="400" fetchpriority="high" decoding="async" />
-      <div class="emblem">
-        <Image src={logoDark} alt="" width={260} height={170} loading="eager" />
-        <span class="emblem-values">{company.values.join(' · ')}</span>
-      </div>
-    </div>
   </div>
 
   <div class="bumper">
@@ -69,6 +73,26 @@ import { heroBrands, whatsappHref, company } from '../data/site';
       linear-gradient(180deg, var(--cab) 0%, var(--cab-deep) 100%);
     color: var(--white);
     isolation: isolate;
+  }
+
+  /* Duotone cab photo weighted to the right, under a navy wash so the copy on the left stays readable. */
+  .hero :global(.backdrop) {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right 30%;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(90deg, rgb(4 29 39 / 0.92) 0%, rgb(4 29 39 / 0.7) 42%, rgb(4 29 39 / 0.15) 100%),
+      linear-gradient(180deg, rgb(4 29 39 / 0) 55%, var(--cab-deep) 100%);
   }
 
   /* Five amber clearance lights on the cab roof. */
@@ -105,11 +129,10 @@ import { heroBrands, whatsappHref, company } from '../data/site';
   }
 
   .cab {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    align-items: center;
-    gap: var(--space-l);
     padding-block: var(--space-l) var(--space-xl);
+  }
+  .copy {
+    max-width: 46rem;
   }
 
   h1 {
@@ -177,56 +200,6 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     margin-top: var(--space-l);
   }
 
-  /* Radiator grille: chrome surround, vertical slats, emblem mounted on top. */
-  .grille {
-    position: relative;
-    aspect-ratio: 6 / 5;
-    width: 100%;
-    max-width: 32rem;
-    justify-self: end;
-    border-radius: 26px;
-    /* box-shadow instead of filter: drop-shadow — same look on this rounded shape, no filter pass. */
-    box-shadow: 0 30px 50px -18px rgb(0 0 0 / 0.75);
-  }
-  /* The grille is a real <img> in the HTML (high fetch priority, preloaded) because it is the LCP element. */
-  .grille-art {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 26px;
-    object-fit: cover;
-  }
-  .emblem {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    display: grid;
-    justify-items: center;
-    gap: 0.6rem;
-    width: 78%;
-    padding: 1.2rem 1rem 1rem;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
-    background: linear-gradient(180deg, #0b3647, var(--cab-deep));
-    box-shadow:
-      0 0 0 3px #c9d2d7,
-      0 0 0 5px #5c6a71,
-      0 18px 30px -12px rgb(0 0 0 / 0.85);
-  }
-  .emblem img {
-    width: 100%;
-    height: auto;
-  }
-  .emblem-values {
-    font-family: var(--font-label);
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--chrome-2);
-  }
-
   /* Chrome bumper carrying the brands from the original banner. */
   .bumper {
     position: relative;
@@ -273,31 +246,12 @@ import { heroBrands, whatsappHref, company } from '../data/site';
 
   @media (max-width: 900px) {
     .cab {
-      grid-template-columns: 1fr;
       padding-bottom: var(--space-l);
     }
-    .grille {
-      justify-self: stretch;
-      max-width: none;
-      aspect-ratio: auto;
-      height: 10rem;
-    }
-    .grille-art {
-      object-fit: cover;
-    }
-    .emblem {
-      width: auto;
-      height: 76%;
-      grid-auto-flow: column;
-      align-items: center;
-      padding: 0.6rem 1.2rem;
-    }
-    .emblem img {
-      width: auto;
-      height: 100%;
-    }
-    .emblem-values {
-      display: none;
+    /* Copy spans the full width on small screens, so the wash covers the photo evenly. */
+    .hero::before {
+      background:
+        linear-gradient(180deg, rgb(4 29 39 / 0.55) 0%, rgb(4 29 39 / 0.85) 45%, var(--cab-deep) 100%);
     }
     .brand-row {
       justify-content: center;
@@ -307,9 +261,6 @@ import { heroBrands, whatsappHref, company } from '../data/site';
   @media (max-width: 520px) {
     .ctas .btn {
       flex: 1 1 100%;
-    }
-    .grille {
-      height: 7.5rem;
     }
     .lights {
       padding-block: 1.1rem 0;
