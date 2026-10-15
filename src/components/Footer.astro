@@ -1,8 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import Filete from './Filete.astro';
-import logoDark from '../assets/brand/logo-dark.png';
+import logoDark from '../assets/brand/logo-dark.svg?url';
 import { company, nav, social, branches, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
 
 // Newsletter block is hidden for now (client request). Set to true to show it again.
@@ -39,7 +38,7 @@ const year = new Date().getFullYear();
 
     <div class="cols">
       <div class="brand">
-        <Image src={logoDark} alt="HERRAGA Refacciones" width={180} height={117} loading="lazy" />
+        <img src={logoDark} alt="HERRAGA Refacciones" width="180" height="117" loading="lazy" />
         <p>{company.tagline}. {company.values.join(' · ')}.</p>
         <ul class="social">
           {social.map((s) => (

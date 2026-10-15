@@ -1,14 +1,14 @@
 ---
-import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-import logoDark from '../assets/brand/logo-dark.png';
+import logoDark from '../assets/brand/logo-dark.svg?url';
 import { nav, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
 ---
 
 <header class="site-header" data-header>
   <div class="bar wrap">
     <a class="brand" href="#inicio" aria-label="HERRAGA Refacciones, ir al inicio">
-      <Image src={logoDark} alt="" width={120} height={78} loading="eager" />
+      <img src={logoDark} alt="" width="120" height="78" />
+
     </a>
 
     <nav class="nav" aria-label="Principal">
