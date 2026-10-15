@@ -27,3 +27,4 @@ pnpm-debug.log*
 .impeccable/shots/
 .impeccable/og.png
 .claude/worktrees/
+.design-canvas/
