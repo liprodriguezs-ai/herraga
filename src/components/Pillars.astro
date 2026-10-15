@@ -41,8 +41,8 @@ const pointIcons: Record<string, string> = {
             <Image
               src={images[p.image]}
               alt={p.imageAlt}
-              widths={[480, 640, 760, 960, 1280]}
-              sizes="(max-width: 860px) 100vw, (max-width: 1340px) 48vw, 640px"
+              widths={[400, 640, 760, 960, 1280]}
+              sizes="(max-width: 860px) calc(100vw - 3.5rem), (max-width: 1340px) 48vw, 640px"
               loading="lazy"
             />
           </div>
