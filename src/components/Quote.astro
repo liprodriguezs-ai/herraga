@@ -1,0 +1,248 @@
+---
+import Icon from './Icon.astro';
+import { NATIONAL_PHONE, formatPhone, telHref } from '../data/site';
+---
+
+<section id="cotizar" class="quote" aria-labelledby="cotizar-title">
+  <div class="wrap grid">
+    <div class="copy">
+      <h2 id="cotizar-title">Cotiza con un asesor especializado</h2>
+      <p>
+        Te ayudamos a encontrar la refacción exacta para tu unidad. Evita errores, ahorra tiempo y asegura el
+        correcto funcionamiento de tu motor.
+      </p>
+      <p class="call">
+        ¿Prefieres llamar?
+        <a href={telHref(NATIONAL_PHONE)}><Icon name="phone" />{formatPhone(NATIONAL_PHONE)}</a>
+      </p>
+    </div>
+
+    <form class="form" novalidate data-quote>
+      <div class="field">
+        <label for="q-name">Nombre <span aria-hidden="true">*</span></label>
+        <input id="q-name" name="nombre" autocomplete="name" required aria-describedby="q-name-err" />
+        <p class="err" id="q-name-err" data-err="nombre">Escribe tu nombre para que el asesor sepa con quién habla.</p>
+      </div>
+      <div class="field">
+        <label for="q-city">Ciudad</label>
+        <input id="q-city" name="ciudad" autocomplete="address-level2" placeholder="Ej. Tijuana" />
+      </div>
+      <div class="field wide">
+        <label for="q-engine">Marca y modelo de motor <span aria-hidden="true">*</span></label>
+        <input
+          id="q-engine"
+          name="motor"
+          required
+          placeholder="Ej. Cummins ISX, Detroit Serie 60 DDEC 4"
+          aria-describedby="q-engine-err"
+        />
+        <p class="err" id="q-engine-err" data-err="motor">Indica la marca y el modelo de tu motor.</p>
+      </div>
+      <div class="field wide">
+        <label for="q-part">Refacción que buscas <span aria-hidden="true">*</span></label>
+        <input
+          id="q-part"
+          name="refaccion"
+          required
+          placeholder="Ej. media reparación, cabeza de cilindro, bomba de aceite"
+          aria-describedby="q-part-err"
+        />
+        <p class="err" id="q-part-err" data-err="refaccion">Dinos qué refacción necesitas.</p>
+      </div>
+      <div class="field wide">
+        <label for="q-notes">Comentarios</label>
+        <textarea id="q-notes" name="comentarios" rows="3" placeholder="Número de parte, número de serie, urgencia…"></textarea>
+      </div>
+      <div class="submit wide">
+        <button class="btn btn--chrome" type="submit">
+          <Icon name="whatsapp" />
+          Enviar por WhatsApp
+        </button>
+        <p class="hint">Se abrirá WhatsApp con tu mensaje listo para enviar.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { whatsappHref } from '../data/site';
+
+  const form = document.querySelector<HTMLFormElement>('[data-quote]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let firstInvalid: HTMLInputElement | null = null;
+    form.querySelectorAll<HTMLInputElement>('[required]').forEach((input) => {
+      const ok = input.value.trim() !== '';
+      input.setAttribute('aria-invalid', String(!ok));
+      form.querySelector(`[data-err="${input.name}"]`)?.classList.toggle('is-shown', !ok);
+      if (!ok && !firstInvalid) firstInvalid = input;
+    });
+    if (firstInvalid) {
+      (firstInvalid as HTMLInputElement).focus();
+      return;
+    }
+    const data = new FormData(form);
+    const v = (k: string) => String(data.get(k) ?? '').trim();
+    const lines = [
+      `Hola HERRAGA, soy ${v('nombre')}${v('ciudad') ? ` de ${v('ciudad')}` : ''}.`,
+      `Busco: ${v('refaccion')}`,
+      `Motor: ${v('motor')}`,
+      v('comentarios') && `Comentarios: ${v('comentarios')}`,
+    ].filter(Boolean);
+    window.open(whatsappHref(lines.join('\n')), '_blank', 'noopener');
+  });
+
+  form?.addEventListener('input', (e) => {
+    const input = e.target as HTMLInputElement;
+    if (input.getAttribute('aria-invalid') === 'true' && input.value.trim()) {
+      input.setAttribute('aria-invalid', 'false');
+      form.querySelector(`[data-err="${input.name}"]`)?.classList.remove('is-shown');
+    }
+  });
+</script>
+
+<style>
+  .quote {
+    position: relative;
+    padding-block: var(--space-xl);
+    color: var(--white);
+    background:
+      repeating-linear-gradient(135deg, rgb(0 0 0 / 0.06) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg, #d0141f 0%, var(--red) 45%, var(--red-deep) 100%);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--space-l);
+    align-items: start;
+  }
+  h2 {
+    font-size: var(--step-4);
+    color: var(--white);
+  }
+  .copy {
+    display: grid;
+    gap: var(--space-m);
+  }
+  .copy > p {
+    max-width: 44ch;
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: #ffe3e5;
+  }
+  .call {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-label);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .call a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 900;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .call a:hover {
+    text-decoration: underline;
+  }
+  .call :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 1.1rem;
+    padding: var(--space-m);
+    border-radius: 14px;
+    background: var(--cab-deep);
+    box-shadow: 0 0 0 4px #c9d2d7, 0 0 0 6px #5c6a71, 0 40px 70px -30px rgb(0 0 0 / 0.7);
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .wide {
+    grid-column: 1 / -1;
+  }
+  label {
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--chrome-2);
+  }
+  label span {
+    color: var(--red-bright);
+  }
+  input,
+  textarea {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.7rem 0.9rem;
+    border: 2px solid #23495a;
+    border-radius: var(--radius);
+    background: #062634;
+    color: var(--white);
+    font: 500 1.05rem/1.35 var(--font-body);
+    transition: border-color 160ms;
+  }
+  textarea {
+    resize: vertical;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: #87a0ab;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+  input[aria-invalid='true'] {
+    border-color: var(--red-bright);
+  }
+  .err {
+    display: none;
+    font-size: 0.95rem;
+    color: #ffb3b8;
+  }
+  .err.is-shown {
+    display: block;
+  }
+  .submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-top: 0.4rem;
+  }
+  .hint {
+    font-size: 0.95rem;
+    color: #9fb0b8;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .form {
+      grid-template-columns: 1fr;
+    }
+    .submit .btn {
+      width: 100%;
+    }
+  }
+</style>

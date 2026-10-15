@@ -1,0 +1,530 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import Filete from './Filete.astro';
+import { specialties, whatsappHref } from '../data/site';
+import mediasImg from '../assets/products/medias-reparaciones.jpg';
+import cabezaImg from '../assets/products/cabeza-cilindro.jpg';
+
+const images = { 'medias-reparaciones': mediasImg, 'cabeza-cilindro': cabezaImg };
+
+const tagMessage = (short: string, brand: string, code: string) =>
+  `Hola HERRAGA, busco ${short} para motor ${brand} ${code}. ¿Tienen disponibilidad?`;
+---
+
+<section id="motores" class="engines" aria-labelledby="motores-title" data-engines>
+  <div class="wrap">
+    <header class="head">
+      <h2 id="motores-title" class="section-title chrome">Busca tu motor</h2>
+      <p class="lede">
+        Especialistas en motores de trabajo pesado. Elige tu motor y te cotizamos por WhatsApp con el modelo
+        ya escrito.
+      </p>
+    </header>
+
+    <div class="controls">
+      <label class="search">
+        <Icon name="search" />
+        <span class="visually-hidden">Busca por modelo de motor</span>
+        <input
+          type="search"
+          inputmode="search"
+          autocomplete="off"
+          placeholder="Escribe tu motor: ISX, DDEC 4, D13, OM 906…"
+          data-search
+        />
+      </label>
+
+      <div class="tabs" role="tablist" aria-label="Especialidad">
+        {specialties.map((s, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${s.id}`}
+            aria-controls={`panel-${s.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-tab={s.id}
+          >
+            <span class="switch" aria-hidden="true" />
+            {s.title}
+            <span class="count" data-count={s.id}>{s.groups.reduce((n, g) => n + g.lines.flat().length, 0)}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {specialties.map((s) => (
+      <div
+        class="panel"
+        role="tabpanel"
+        id={`panel-${s.id}`}
+        aria-labelledby={`tab-${s.id}`}
+        data-panel={s.id}
+      >
+        <div class="panel-intro">
+          <h3 class="panel-title">{s.title}</h3>
+          <div class="photo">
+            <Image
+              src={images[s.image]}
+              alt={s.imageAlt}
+              widths={[420, 640, 900]}
+              sizes="(max-width: 900px) 100vw, 380px"
+              loading="lazy"
+            />
+          </div>
+          <p class="panel-note">Calidad · Servicio · Confianza</p>
+        </div>
+
+        <ul class="flaps">
+          {s.groups.map((g) => (
+            <li class="flap" data-brand>
+              <h4 class="plate"><span class="chrome">{g.brand}</span></h4>
+              {g.lines.map((line) => (
+                <ul class="tags">
+                  {line.map((code) => (
+                    <li>
+                      <a
+                        class="tag"
+                        href={whatsappHref(tagMessage(s.short, g.brand, code))}
+                        target="_blank"
+                        rel="noopener"
+                        data-tag={`${g.brand} ${code}`}
+                        aria-label={`Cotizar ${s.short} ${g.brand} ${code} por WhatsApp`}
+                      >
+                        {code}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+
+    <div class="empty" data-empty hidden>
+      <p>
+        No encontramos <strong data-empty-query></strong> en el catálogo publicado, pero manejamos más
+        aplicaciones. Pregúntanos directo.
+      </p>
+      <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener" data-empty-link>
+        <Icon name="whatsapp" />
+        Preguntar por WhatsApp
+      </a>
+    </div>
+
+    <div class="foot">
+      <Filete tone="amber" />
+    </div>
+  </div>
+</section>
+
+<script>
+  import { whatsappHref } from '../data/site';
+
+  const root = document.querySelector<HTMLElement>('[data-engines]');
+  if (root) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+    const search = root.querySelector<HTMLInputElement>('[data-search]');
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const emptyQuery = root.querySelector<HTMLElement>('[data-empty-query]');
+    const emptyLink = root.querySelector<HTMLAnchorElement>('[data-empty-link]');
+
+    const select = (id: string, focus = false) => {
+      tabs.forEach((t) => {
+        const on = t.dataset.tab === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p) => (p.hidden = p.dataset.panel !== id));
+    };
+
+    // Progressive enhancement: without JS both catalogs stay visible.
+    root.classList.add('is-enhanced');
+    select(tabs[0].dataset.tab!);
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t.dataset.tab!));
+      t.addEventListener('keydown', (e) => {
+        const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!dir) return;
+        e.preventDefault();
+        select(tabs[(i + dir + tabs.length) % tabs.length].dataset.tab!, true);
+      });
+    });
+
+    const norm = (v: string) =>
+      v.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[\s\-./]/g, '');
+
+    search?.addEventListener('input', () => {
+      const q = norm(search.value);
+      let activeHasMatch = false;
+      let firstWithMatch: string | null = null;
+
+      panels.forEach((p) => {
+        let panelMatches = 0;
+        p.querySelectorAll<HTMLElement>('[data-brand]').forEach((flap) => {
+          let flapMatches = 0;
+          flap.querySelectorAll<HTMLElement>('[data-tag]').forEach((tag) => {
+            const hit = !q || norm(tag.dataset.tag!).includes(q) || norm(tag.textContent ?? '').includes(q);
+            tag.classList.toggle('is-hit', Boolean(q) && hit);
+            tag.classList.toggle('is-miss', Boolean(q) && !hit);
+            if (hit) flapMatches++;
+          });
+          flap.hidden = Boolean(q) && flapMatches === 0;
+          panelMatches += flapMatches;
+        });
+        const counter = root.querySelector<HTMLElement>(`[data-count="${p.dataset.panel}"]`);
+        if (counter) counter.textContent = String(panelMatches);
+        if (panelMatches && !firstWithMatch) firstWithMatch = p.dataset.panel!;
+        if (!p.hidden && panelMatches) activeHasMatch = true;
+      });
+
+      if (q && !activeHasMatch && firstWithMatch) select(firstWithMatch);
+
+      const none = Boolean(q) && !firstWithMatch;
+      if (empty) empty.hidden = !none;
+      if (none) {
+        if (emptyQuery) emptyQuery.textContent = `«${search.value.trim()}»`;
+        if (emptyLink)
+          emptyLink.href = whatsappHref(`Hola HERRAGA, busco refacciones para motor ${search.value.trim()}.`);
+      }
+      panels.forEach((p) => p.classList.toggle('is-empty', none));
+    });
+  }
+</script>
+
+<style>
+  .engines {
+    position: relative;
+    padding-block: var(--space-xl);
+    color: var(--white);
+    background:
+      radial-gradient(70% 50% at 15% 0%, rgb(255 255 255 / 0.05), transparent 70%),
+      var(--rubber);
+  }
+
+  .head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: end;
+    gap: var(--space-m) var(--space-l);
+  }
+  .lede {
+    max-width: 48ch;
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: #b8c3c9;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: var(--space-l);
+    padding-bottom: var(--space-m);
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .search {
+    position: relative;
+    flex: 1 1 22rem;
+    max-width: 30rem;
+  }
+  .search :global(svg) {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    width: 1.3rem;
+    height: 1.3rem;
+    color: var(--amber);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .search input {
+    width: 100%;
+    min-height: 3.4rem;
+    padding: 0.7rem 1rem 0.7rem 3rem;
+    border: 2px solid #3a4248;
+    border-radius: var(--radius);
+    background: #0d0f11;
+    color: var(--white);
+    font: 500 1.1rem/1.2 var(--font-body);
+    box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.6);
+    transition: border-color 160ms;
+  }
+  .search input::placeholder {
+    color: #8d999f;
+  }
+  .search input:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.35rem;
+    border-radius: 10px;
+    background: #0d0f11;
+    box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.6);
+  }
+  .tabs [role='tab'] {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.9rem;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #a9b5bc;
+    font-family: var(--font-label);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out);
+  }
+  .tabs [role='tab']:hover {
+    color: var(--white);
+  }
+  .tabs [role='tab'][aria-selected='true'] {
+    background: var(--chrome-h);
+    color: var(--cab-deep);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), 0 4px 10px -4px rgb(0 0 0 / 0.8);
+  }
+  /* Cab dash toggle: the lamp lights when the switch is on. */
+  .switch {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: #3a4248;
+    transition: background-color 200ms, box-shadow 200ms;
+  }
+  [aria-selected='true'] .switch {
+    background: var(--amber);
+    box-shadow: 0 0 10px 2px rgb(255 178 46 / 0.7);
+  }
+  .count {
+    min-width: 1.8rem;
+    padding: 0.05rem 0.4rem;
+    border-radius: 4px;
+    background: rgb(0 0 0 / 0.25);
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .panel {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.32fr) minmax(0, 1fr);
+    gap: var(--space-l);
+    margin-top: var(--space-l);
+  }
+  .engines:not(.is-enhanced) .panel + .panel {
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    padding-top: var(--space-l);
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  .panel.is-empty {
+    display: none;
+  }
+
+  .panel-intro {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+    display: grid;
+    gap: 1rem;
+  }
+  .panel-title {
+    font-size: var(--step-3);
+    color: var(--white);
+  }
+  .photo {
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: 0 0 0 4px #c9d2d7, 0 0 0 6px #4e5a60, 0 20px 40px -20px rgb(0 0 0 / 0.9);
+  }
+  .photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .panel-note {
+    font-family: var(--font-label);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8d999f;
+  }
+
+  /* Mud flaps: black rubber, chrome nameplate, riveted engine tags. */
+  .flaps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+    gap: 1.1rem;
+    align-items: start;
+  }
+  .flap {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.1rem 1.1rem 1.9rem;
+    border-radius: 4px 4px 14px 14px;
+    background:
+      repeating-linear-gradient(0deg, rgb(255 255 255 / 0.018) 0 2px, transparent 2px 5px),
+      linear-gradient(180deg, var(--rubber-2), #101315);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 18px 30px -18px rgb(0 0 0 / 0.95);
+  }
+  .flap[hidden] {
+    display: none;
+  }
+  /* Hanger bar at the top and reflector strip at the bottom of the flap. */
+  .flap::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 5px;
+    border-radius: 4px 4px 0 0;
+    background: var(--chrome-h);
+  }
+  .flap::after {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 0.75rem;
+    height: 4px;
+    border-radius: 2px;
+    background: repeating-linear-gradient(90deg, var(--red) 0 14px, #e9eef0 14px 28px);
+    opacity: 0.85;
+  }
+  .plate {
+    font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.95rem);
+    font-weight: 900;
+    line-height: 1;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding: 0.3rem 0.75rem 0.3rem 1.2rem;
+    border-radius: 4px;
+    background: var(--chrome-h);
+    color: var(--cab-deep);
+    font-family: var(--font-label);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -2px 0 rgb(0 0 0 / 0.18), 0 3px 6px -2px rgb(0 0 0 / 0.8);
+    transition: transform 160ms var(--ease-out), background 160ms, opacity 200ms, filter 200ms;
+  }
+  /* Rivet. */
+  .tag::before {
+    content: '';
+    position: absolute;
+    left: 0.45rem;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff, #6f7c83);
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.4);
+  }
+  .tag:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, var(--amber-hot), var(--amber));
+  }
+  .tag.is-hit {
+    background: linear-gradient(180deg, var(--amber-hot), var(--amber));
+    box-shadow: 0 0 0 2px var(--amber), 0 0 16px 2px rgb(255 178 46 / 0.55);
+  }
+  .tag.is-miss {
+    opacity: 0.28;
+    filter: grayscale(1);
+  }
+
+  .empty {
+    display: grid;
+    justify-items: start;
+    gap: 1.25rem;
+    max-width: 42rem;
+    margin-top: var(--space-l);
+    padding: var(--space-m);
+    border: 2px dashed #3a4248;
+    border-radius: 10px;
+    font-size: var(--step-1);
+    color: #c9d6dc;
+  }
+  .empty[hidden] {
+    display: none;
+  }
+  .empty strong {
+    color: var(--amber);
+  }
+
+  .foot {
+    margin-top: var(--space-xl);
+  }
+
+  @media (max-width: 900px) {
+    .head {
+      grid-template-columns: 1fr;
+    }
+    .panel {
+      grid-template-columns: 1fr;
+    }
+    .panel-intro {
+      position: static;
+      grid-template-columns: minmax(0, 1fr) 9rem;
+      align-items: center;
+    }
+    .panel-title {
+      grid-column: 1;
+    }
+    .photo {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .panel-note {
+      display: none;
+    }
+    .tabs {
+      flex: 1 1 100%;
+    }
+    .tabs [role='tab'] {
+      flex: 1;
+      justify-content: center;
+      padding-inline: 0.6rem;
+      font-size: 0.98rem;
+    }
+    .search {
+      max-width: none;
+    }
+  }
+  @media (max-width: 420px) {
+    .tabs [role='tab'] .count {
+      display: none;
+    }
+  }
+</style>

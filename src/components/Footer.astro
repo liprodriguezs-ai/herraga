@@ -1,0 +1,330 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import Filete from './Filete.astro';
+import logoDark from '../assets/brand/logo-dark.png';
+import { company, nav, social, branches, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
+
+const endpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? '';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap">
+    <section class="newsletter" aria-labelledby="news-title">
+      <div>
+        <h2 id="news-title">Suscríbete</h2>
+        <p>Suscríbete para recibir actualizaciones, promociones y mucho más.</p>
+      </div>
+      <form class="news-form" data-news data-endpoint={endpoint} novalidate>
+        <div class="field">
+          <label for="n-name">Nombre <span aria-hidden="true">*</span></label>
+          <input id="n-name" name="nombre" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="n-email">Correo electrónico <span aria-hidden="true">*</span></label>
+          <input id="n-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="btn btn--primary" type="submit" data-news-btn>Enviar</button>
+        <p class="status" role="status" aria-live="polite" data-news-status></p>
+      </form>
+    </section>
+
+    <Filete tone="chrome" />
+
+    <div class="cols">
+      <div class="brand">
+        <Image src={logoDark} alt="HERRAGA Refacciones" width={180} height={117} loading="lazy" />
+        <p>{company.tagline}. {company.values.join(' · ')}.</p>
+        <ul class="social">
+          {social.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener me" aria-label={`HERRAGA en ${s.name}`}>
+                <Icon name={s.icon} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <nav aria-label="Pie de página">
+        <h2>Navegación</h2>
+        <ul>
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div>
+        <h2>Sucursales</h2>
+        <ul>
+          {branches.map((b) => (
+            <li>
+              <a href={telHref(b.phone)}>{b.city}, {b.region} · {formatPhone(b.phone)}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2>Atención nacional</h2>
+        <ul>
+          <li><a class="big" href={telHref(NATIONAL_PHONE)}>{formatPhone(NATIONAL_PHONE)}</a></li>
+          <li>
+            <a href={whatsappHref()} target="_blank" rel="noopener" class="wa">
+              <Icon name="whatsapp" /> Escríbenos por WhatsApp
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="legal">
+      Copyright © {year} {company.legalName} – Todos los derechos reservados.
+    </p>
+  </div>
+</footer>
+
+<script>
+  import { whatsappHref } from '../data/site';
+
+  const form = document.querySelector<HTMLFormElement>('[data-news]');
+  const status = form?.querySelector<HTMLElement>('[data-news-status]');
+  const btn = form?.querySelector<HTMLButtonElement>('[data-news-btn]');
+
+  const say = (msg: string, tone: 'ok' | 'error' | '') => {
+    if (!status) return;
+    status.textContent = msg;
+    status.dataset.tone = tone;
+  };
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = form.elements.namedItem('nombre') as HTMLInputElement;
+    const email = form.elements.namedItem('email') as HTMLInputElement;
+
+    name.setAttribute('aria-invalid', String(!name.value.trim()));
+    email.setAttribute('aria-invalid', String(!email.validity.valid || !email.value.trim()));
+    if (!name.value.trim()) {
+      say('Escribe tu nombre para suscribirte.', 'error');
+      return name.focus();
+    }
+    if (!email.value.trim() || !email.validity.valid) {
+      say('Revisa tu correo electrónico, por ejemplo: nombre@empresa.com.', 'error');
+      return email.focus();
+    }
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) {
+      // No mailing-list provider configured yet: hand the request to an advisor on WhatsApp.
+      window.open(
+        whatsappHref(`Hola HERRAGA, quiero suscribirme a promociones. Nombre: ${name.value.trim()}. Correo: ${email.value.trim()}.`),
+        '_blank',
+        'noopener'
+      );
+      say('Abrimos WhatsApp para completar tu suscripción.', 'ok');
+      return;
+    }
+
+    btn!.disabled = true;
+    btn!.textContent = 'Enviando…';
+    say('', '');
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      say('¡Listo! Te suscribiste. Pronto recibirás nuestras promociones.', 'ok');
+    } catch {
+      say('No pudimos registrar tu correo. Inténtalo de nuevo o escríbenos por WhatsApp.', 'error');
+    } finally {
+      btn!.disabled = false;
+      btn!.textContent = 'Enviar';
+    }
+  });
+</script>
+
+<style>
+  .footer {
+    padding-block: var(--space-xl) var(--space-m);
+    background: var(--cab-deep);
+    color: #c9d6dc;
+  }
+
+  .newsletter {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: var(--space-m) var(--space-l);
+    align-items: end;
+    padding-bottom: var(--space-l);
+  }
+  .newsletter h2 {
+    font-size: var(--step-3);
+    color: var(--white);
+  }
+  .newsletter p {
+    margin-top: 0.6rem;
+    max-width: 40ch;
+  }
+  .news-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 0.8rem;
+    align-items: end;
+  }
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+  label {
+    font-family: var(--font-label);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--chrome-2);
+  }
+  label span {
+    color: var(--red-bright);
+  }
+  input {
+    width: 100%;
+    min-height: 3.25rem;
+    padding: 0.65rem 0.9rem;
+    border: 2px solid #23495a;
+    border-radius: var(--radius);
+    background: #062634;
+    color: var(--white);
+    font: 500 1.05rem var(--font-body);
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--amber);
+  }
+  input[aria-invalid='true'] {
+    border-color: var(--red-bright);
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+  }
+  .status {
+    grid-column: 1 / -1;
+    min-height: 1.5em;
+    margin: 0;
+    font-size: 0.98rem;
+  }
+  .status[data-tone='ok'] {
+    color: #8fe3a8;
+  }
+  .status[data-tone='error'] {
+    color: #ffb3b8;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1.3fr 0.8fr 1.3fr 1fr;
+    gap: var(--space-l);
+    padding-block: var(--space-l);
+  }
+  .brand img {
+    width: 9rem;
+    height: auto;
+  }
+  .brand p {
+    margin-top: 1rem;
+    max-width: 30ch;
+  }
+  .cols h2 {
+    margin-bottom: 0.9rem;
+    font-family: var(--font-label);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--amber);
+  }
+  .cols ul:not(.social) {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .cols a {
+    text-decoration: none;
+    color: #c9d6dc;
+  }
+  .cols a:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+  .big {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 900;
+    color: var(--white) !important;
+  }
+  .wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .wa :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #25d366;
+  }
+
+  .social {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+  }
+  .social a {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--chrome-h);
+    color: var(--cab-deep);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 6px 12px -6px rgb(0 0 0 / 0.8);
+    transition: transform 180ms var(--ease-out);
+  }
+  .social a:hover {
+    transform: translateY(-2px);
+    color: var(--red);
+  }
+  .social :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .legal {
+    padding-top: var(--space-m);
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+    font-size: 0.9rem;
+    color: #8ea2ab;
+  }
+
+  @media (max-width: 1000px) {
+    .newsletter {
+      grid-template-columns: 1fr;
+    }
+    .cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 600px) {
+    .news-form {
+      grid-template-columns: 1fr;
+    }
+    .news-form .btn {
+      width: 100%;
+    }
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

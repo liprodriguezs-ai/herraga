@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { products, whatsappHref } from '../data/site';
+import filtros from '../assets/products/filtros.jpg';
+import enfriadores from '../assets/products/enfriadores.jpg';
+import bombas from '../assets/products/bombas-aceite.jpg';
+import juntas from '../assets/products/juntas.jpg';
+import sensores from '../assets/products/sensores.jpg';
+import aceites from '../assets/products/aceites.jpg';
+
+const images = { filtros, enfriadores, 'bombas-aceite': bombas, juntas, sensores, aceites };
+---
+
+<section id="productos" class="products" aria-labelledby="productos-title">
+  <div class="wrap">
+    <header class="head">
+      <h2 id="productos-title" class="section-title">Conoce más de nuestros productos</h2>
+      <p class="section-lede">Todo lo que tu motor de trabajo pesado necesita, en un solo mostrador.</p>
+    </header>
+
+    <ul class="shelf">
+      {products.map((p) => (
+        <li class="item">
+          <div class="photo">
+            <Image
+              src={images[p.id]}
+              alt={p.alt}
+              widths={[360, 520]}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              loading="lazy"
+            />
+          </div>
+          <h3>{p.title}</h3>
+          <p>{p.body}</p>
+          <a
+            class="quote"
+            href={whatsappHref(`Hola HERRAGA, quiero cotizar ${p.title.toLowerCase()} para mi motor.`)}
+            target="_blank"
+            rel="noopener"
+          >
+            Cotizar {p.title.toLowerCase()}
+            <Icon name="arrow" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .products {
+    padding-block: var(--space-l) var(--space-xl);
+    background: var(--paint);
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem var(--space-l);
+  }
+  .head .section-title {
+    max-width: 14ch;
+  }
+  .head .section-lede {
+    max-width: 34ch;
+  }
+
+  .shelf {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-l) var(--space-m);
+    margin-top: var(--space-l);
+  }
+  .item {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 0.7rem;
+  }
+  .photo {
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: 0 0 0 1px var(--paint-2), var(--shadow-lift);
+  }
+  .photo img {
+    width: 100%;
+    aspect-ratio: 509 / 374;
+    object-fit: cover;
+    transition: transform 600ms var(--ease-out);
+  }
+  .item:hover .photo img {
+    transform: scale(1.04);
+  }
+  h3 {
+    margin-top: 0.4rem;
+    font-size: var(--step-2);
+    color: var(--cab);
+  }
+  .item p {
+    color: var(--ink-soft);
+  }
+  .quote {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    justify-self: start;
+    padding-block: 0.4rem;
+    font-family: var(--font-label);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--red);
+    border-bottom: 2px solid currentColor;
+  }
+  .quote :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform 200ms var(--ease-out);
+  }
+  .quote:hover :global(svg) {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 1024px) {
+    .shelf {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .shelf {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

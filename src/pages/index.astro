@@ -1,16 +1,32 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Engines from '../components/Engines.astro';
+import Pillars from '../components/Pillars.astro';
+import Products from '../components/Products.astro';
+import Brands from '../components/Brands.astro';
+import Branches from '../components/Branches.astro';
+import Quote from '../components/Quote.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFab from '../components/WhatsAppFab.astro';
+
+const title = 'Refacciones Diésel para Motores de Rango Pesado | HERRAGA Refacciones';
+const description =
+  'Refacciones diésel originales y con garantía: medias reparaciones y cabezas de cilindro para Cummins, Detroit, Volvo, Navistar y más. Envíos a todo México.';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={title} description={description}>
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <Engines />
+    <Pillars />
+    <Products />
+    <Brands />
+    <Branches />
+    <Quote />
+  </main>
+  <Footer />
+  <WhatsAppFab />
+</Layout>

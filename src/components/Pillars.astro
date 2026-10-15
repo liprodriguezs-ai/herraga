@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import Filete from './Filete.astro';
+import { pillars, whatsappHref, telHref, NATIONAL_PHONE, formatPhone } from '../data/site';
+import garantia from '../assets/sections/garantia.jpg';
+import asesoria from '../assets/sections/asesoria.jpg';
+import envios from '../assets/sections/envios.jpg';
+import pagos from '../assets/sections/pagos.jpg';
+
+const images = { garantia, asesoria, envios, pagos };
+
+const pointIcons: Record<string, string> = {
+  'Pago con tarjeta': 'card',
+  'Transferencia bancaria': 'bank',
+  'Link de pago': 'link',
+  Efectivo: 'cash',
+  'Cobertura nacional': 'pin',
+  'Envíos seguros': 'shield',
+  'Entregas rápidas': 'truck',
+  Calidad: 'award',
+  Confianza: 'check',
+  Garantía: 'shield',
+};
+---
+
+<section id="por-que" class="pillars" aria-labelledby="pillars-title">
+  <div class="wrap">
+    <header class="head">
+      <h2 id="pillars-title" class="section-title">Refacciones diésel con respaldo</h2>
+      <p class="section-lede">
+        Vendemos refacciones originales y con garantía para unidades de rango medio y pesado, transporte de
+        carga y pasajeros.
+      </p>
+    </header>
+
+    <div class="rows">
+      {pillars.map((p, i) => (
+        <article class:list={['row', { flip: i % 2 === 1 }]} id={p.id}>
+          <div class="media">
+            <Image
+              src={images[p.image]}
+              alt={p.imageAlt}
+              widths={[480, 760, 1100]}
+              sizes="(max-width: 860px) 100vw, 46vw"
+              loading="lazy"
+            />
+          </div>
+          <div class="text">
+            <h3>{p.title}</h3>
+            {p.lead && <p class="lead">{p.lead}</p>}
+            <p class="body">{p.body}</p>
+            {p.points.length > 0 && (
+              <ul class="points">
+                {p.points.map((pt) => (
+                  <li>
+                    <Icon name={pointIcons[pt] ?? 'check'} />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {p.cta.kind === 'whatsapp' ? (
+              <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
+                <Icon name="whatsapp" />
+                {p.cta.label}
+              </a>
+            ) : (
+              <a class="btn btn--ghost" href={telHref(NATIONAL_PHONE)}>
+                <Icon name="phone" />
+                {p.cta.label} {formatPhone(NATIONAL_PHONE)}
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<div class="wrap divider"><Filete /></div>
+
+<style>
+  .pillars {
+    padding-block: var(--space-xl) var(--space-l);
+    background: var(--paint);
+  }
+  .head {
+    max-width: 56rem;
+  }
+
+  .rows {
+    display: grid;
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: var(--space-l);
+  }
+  .row.flip .media {
+    order: 2;
+  }
+
+  .media {
+    position: relative;
+    border-radius: 10px;
+    padding: 10px;
+    background: var(--chrome-h);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), var(--shadow-lift), 0 30px 50px -30px rgb(4 29 39 / 0.55);
+  }
+  .media img {
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  .text {
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+  }
+  h3 {
+    font-size: var(--step-3);
+    color: var(--cab);
+  }
+  .lead {
+    font-family: var(--font-label);
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .body {
+    max-width: 52ch;
+    color: var(--ink-soft);
+  }
+  .points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-block: 0.25rem 0.5rem;
+  }
+  .points li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem 0.45rem 0.6rem;
+    border-radius: 999px;
+    background: var(--white);
+    box-shadow: inset 0 0 0 1px var(--paint-2), 0 2px 6px -3px rgb(4 29 39 / 0.25);
+    font-family: var(--font-label);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--cab);
+  }
+  .points :global(svg) {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--red);
+  }
+
+  .divider {
+    padding-block: var(--space-m);
+  }
+
+  @media (max-width: 860px) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+    .row.flip .media {
+      order: 0;
+    }
+  }
+</style>

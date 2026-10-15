@@ -1,0 +1,256 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logoDark from '../assets/brand/logo-dark.png';
+import { nav, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
+---
+
+<header class="site-header" data-header>
+  <div class="bar wrap">
+    <a class="brand" href="#inicio" aria-label="HERRAGA Refacciones, ir al inicio">
+      <Image src={logoDark} alt="" width={120} height={78} loading="eager" />
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      <ul id="menu" class="menu" data-menu>
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+        <li class="menu-phone">
+          <a href={telHref(NATIONAL_PHONE)}>
+            <Icon name="phone" />
+            {formatPhone(NATIONAL_PHONE)}
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="phone" href={telHref(NATIONAL_PHONE)}>
+        <Icon name="phone" />
+        <span>{formatPhone(NATIONAL_PHONE)}</span>
+      </a>
+      <a class="btn btn--primary btn--sm" href={whatsappHref()} target="_blank" rel="noopener">
+        <Icon name="whatsapp" />
+        <span>Habla con un asesor</span>
+      </a>
+      <button class="toggle" type="button" aria-controls="menu" aria-expanded="false" data-toggle>
+        <Icon name="menu" class="i-open" />
+        <Icon name="close" class="i-close" />
+        <span class="visually-hidden">Menú</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const toggle = header?.querySelector<HTMLButtonElement>('[data-toggle]');
+  const menu = header?.querySelector<HTMLElement>('[data-menu]');
+
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    header?.classList.toggle('is-open', open);
+  };
+
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header?.classList.contains('is-open')) {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--cab-deep);
+    color: var(--white);
+    transition: box-shadow 240ms var(--ease-out), background-color 240ms var(--ease-out);
+  }
+  /* Chrome trim along the bottom edge of the cab roof. */
+  .site-header::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--chrome-h);
+    opacity: 0.55;
+  }
+  .site-header.is-scrolled {
+    box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.8);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    min-height: 4.75rem;
+  }
+
+  .brand img {
+    width: auto;
+    height: 3.1rem;
+  }
+
+  .nav {
+    margin-left: auto;
+  }
+  .menu {
+    display: flex;
+    gap: 0.25rem;
+  }
+  .menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
+    font-family: var(--font-label);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--chrome-2);
+    border-radius: 4px;
+    transition: color 160ms, background-color 160ms;
+  }
+  .menu a:hover {
+    color: var(--white);
+    background: rgb(255 255 255 / 0.07);
+  }
+  .menu :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .menu-phone {
+    display: none;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .phone {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-label);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--amber);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .phone :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .phone:hover {
+    color: var(--amber-hot);
+  }
+
+  .toggle {
+    display: none;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    padding: 0;
+    border: 1px solid var(--cab-line);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--white);
+    cursor: pointer;
+  }
+  .toggle :global(svg) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  :global(.i-close) {
+    display: none;
+  }
+  .is-open :global(.i-open) {
+    display: none;
+  }
+  .is-open :global(.i-close) {
+    display: block;
+  }
+
+  @media (max-width: 1100px) {
+    .phone span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .bar {
+      min-height: 4.25rem;
+    }
+    .brand img {
+      height: 2.7rem;
+    }
+    .toggle {
+      display: grid;
+    }
+    .phone {
+      display: none;
+    }
+    .nav {
+      position: absolute;
+      inset: 100% 0 auto;
+      margin: 0;
+      background: var(--cab-deep);
+      border-top: 1px solid var(--cab-line);
+      clip-path: inset(0 0 100% 0);
+      visibility: hidden;
+      transition: clip-path 320ms var(--ease-out), visibility 0s linear 320ms;
+    }
+    .is-open .nav {
+      clip-path: inset(0 0 0 0);
+      visibility: visible;
+      transition: clip-path 320ms var(--ease-out), visibility 0s;
+    }
+    .menu {
+      flex-direction: column;
+      width: var(--wrap);
+      margin-inline: auto;
+      padding-block: 0.75rem 1.25rem;
+    }
+    .menu a {
+      padding: 0.9rem 0.25rem;
+      font-size: 1.3rem;
+      border-bottom: 1px solid rgb(255 255 255 / 0.08);
+      border-radius: 0;
+    }
+    .menu-phone {
+      display: block;
+    }
+    .menu-phone a {
+      color: var(--amber);
+      border-bottom: 0;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .actions .btn span {
+      display: none;
+    }
+    .actions .btn {
+      width: 2.9rem;
+      min-height: 2.9rem;
+      padding: 0;
+    }
+  }
+</style>

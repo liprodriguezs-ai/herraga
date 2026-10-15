@@ -1,0 +1,252 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import mapa from '../assets/sections/mapa.jpg';
+import { branches, guarantees, NATIONAL_PHONE, formatPhone, telHref, whatsappHref } from '../data/site';
+
+const guaranteeIcons = ['shield', 'gear', 'award', 'truck'];
+---
+
+<section id="sucursales" class="branches" aria-labelledby="sucursales-title">
+  <div class="wrap grid">
+    <div class="intro">
+      <h2 id="sucursales-title" class="section-title">Nuestras sucursales</h2>
+      <p class="section-lede">
+        Soluciones en refacciones diésel para que tu motor nunca se detenga. Disponibilidad inmediata en
+        múltiples sucursales.
+      </p>
+      <figure class="map">
+        <Image
+          src={mapa}
+          alt="Mapa de México con las sucursales de HERRAGA en Tijuana, Querétaro, Estado de México y CDMX."
+          widths={[400, 600]}
+          sizes="(max-width: 900px) 100vw, 40vw"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+
+    <div class="list-wrap">
+      <ul class="list">
+        {branches.map((b) => (
+          <li class="branch">
+            <span class="badge" aria-hidden="true"><Icon name="store" /></span>
+            <div>
+              <h3>{b.city}<span>, {b.region}</span></h3>
+              <a href={telHref(b.phone)}>
+                <Icon name="phone" />
+                {formatPhone(b.phone)}
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="national">
+        <span class="badge" aria-hidden="true"><Icon name="headset" /></span>
+        <div>
+          <h3>Atención nacional</h3>
+          <a href={telHref(NATIONAL_PHONE)}>{formatPhone(NATIONAL_PHONE)}</a>
+        </div>
+        <a class="btn btn--primary btn--sm" href={whatsappHref()} target="_blank" rel="noopener">
+          <Icon name="whatsapp" />
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div class="wrap strip-inner">
+      <ul class="guarantees">
+        {guarantees.map((g, i) => (
+          <li>
+            <Icon name={guaranteeIcons[i]} />
+            {g}
+          </li>
+        ))}
+      </ul>
+      <p class="motto">Refacciones diésel de calidad, donde y cuando las necesitas.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .branches {
+    padding-top: var(--space-xl);
+    background: var(--white);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--space-l);
+    align-items: start;
+  }
+
+  .map {
+    margin: var(--space-m) 0 0;
+  }
+  .map img {
+    width: 100%;
+    max-width: 34rem;
+    mix-blend-mode: multiply;
+  }
+
+  .list-wrap {
+    display: grid;
+    gap: 1rem;
+    padding: var(--space-m);
+    border-radius: 14px;
+    background: var(--cab-deep);
+    color: var(--white);
+    box-shadow: 0 0 0 4px #c9d2d7, 0 0 0 6px #5c6a71, 0 30px 60px -30px rgb(4 29 39 / 0.8);
+  }
+  .list {
+    display: grid;
+  }
+  .branch,
+  .national {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .branch {
+    padding-block: 1rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+  .badge {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), 0 0 0 3px rgb(255 255 255 / 0.12);
+  }
+  .badge :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  h3 {
+    font-family: var(--font-label);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+  }
+  h3 span {
+    color: #9fb0b8;
+  }
+  .branch a,
+  .national a:not(.btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.15rem;
+    font-family: var(--font-label);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--amber);
+    text-decoration: none;
+  }
+  .branch a :global(svg) {
+    width: 1rem;
+    height: 1rem;
+  }
+  .branch a:hover,
+  .national a:not(.btn):hover {
+    color: var(--amber-hot);
+    text-decoration: underline;
+  }
+  .national {
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background: rgb(255 255 255 / 0.06);
+  }
+  .national a:not(.btn) {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 900;
+    color: var(--white);
+  }
+  .national .btn {
+    margin-left: auto;
+  }
+
+  .strip {
+    margin-top: var(--space-xl);
+    background: var(--cab);
+    color: var(--white);
+  }
+  .strip-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .guarantees {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    padding-block: 1.5rem;
+  }
+  .guarantees li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-label);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+    text-transform: uppercase;
+  }
+  .guarantees :global(svg) {
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    color: var(--red-bright);
+  }
+  .motto {
+    display: grid;
+    place-items: center start;
+    padding: 1.5rem 1.5rem 1.5rem 3rem;
+    background: var(--red);
+    clip-path: polygon(1.5rem 0, 100% 0, 100% 100%, 0 100%);
+    font-family: var(--font-label);
+    font-size: 1.25rem;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .strip-inner {
+      grid-template-columns: 1fr;
+      width: 100%;
+    }
+    .guarantees {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: var(--wrap);
+      margin-inline: auto;
+    }
+    .motto {
+      clip-path: none;
+      padding: 1.25rem clamp(1rem, 4vw, 2.5rem);
+    }
+  }
+  @media (max-width: 420px) {
+    .national .btn {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+</style>
