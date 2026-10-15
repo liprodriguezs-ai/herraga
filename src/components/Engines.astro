@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import Filete from './Filete.astro';
+import ChromeLetters from './ChromeLetters.astro';
 import { specialties, whatsappHref } from '../data/site';
 import mediasImg from '../assets/products/medias-reparaciones.jpg';
 import cabezaImg from '../assets/products/cabeza-cilindro.jpg';
@@ -15,7 +16,10 @@ const tagMessage = (short: string, brand: string, code: string) =>
 <section id="motores" class="engines" aria-labelledby="motores-title" data-engines>
   <div class="wrap">
     <header class="head">
-      <h2 id="motores-title" class="section-title chrome">Busca tu motor</h2>
+      <h2 id="motores-title" class="section-title">
+        <span class="visually-hidden">Busca tu motor</span>
+        <ChromeLetters class="title-art" lines={['BUSCA TU MOTOR']} width={980} size={150} />
+      </h2>
       <p class="lede">
         Especialistas en motores de trabajo pesado. Elige tu motor y te cotizamos por WhatsApp con el modelo
         ya escrito.
@@ -375,47 +379,64 @@ const tagMessage = (short: string, brand: string, code: string) =>
     grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
     gap: 1.1rem;
     align-items: start;
+    filter: drop-shadow(0 16px 18px rgb(0 0 0 / 0.7));
   }
+  /* The flap: moulded rubber with a riveted chrome hanger on top, cut lower corners,
+     and a chrome weight bar carrying reflective tape along the bottom edge. */
   .flap {
     position: relative;
     display: grid;
-    gap: 0.75rem;
-    padding: 1.1rem 1.1rem 1.9rem;
-    border-radius: 4px 4px 14px 14px;
+    gap: 0.8rem;
+    padding: 2.1rem 1.15rem 3.1rem;
+    /* Rubber flares slightly toward the bottom and the cut corners start above the weight bar. */
+    clip-path: polygon(
+      3% 0,
+      97% 0,
+      100% calc(100% - 46px),
+      calc(100% - 30px) 100%,
+      30px 100%,
+      0 calc(100% - 46px)
+    );
     background:
-      repeating-linear-gradient(0deg, rgb(255 255 255 / 0.018) 0 2px, transparent 2px 5px),
-      linear-gradient(180deg, var(--rubber-2), #101315);
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.06),
-      0 18px 30px -18px rgb(0 0 0 / 0.95);
+      radial-gradient(circle at 18px 9px, #ffffff 0 1.5px, #8e9aa1 2.5px 4px, #2b3338 4.5px 5px, transparent 5.5px),
+      radial-gradient(circle at calc(100% - 18px) 9px, #ffffff 0 1.5px, #8e9aa1 2.5px 4px, #2b3338 4.5px 5px, transparent 5.5px),
+      radial-gradient(circle at 50% 9px, #ffffff 0 1.5px, #8e9aa1 2.5px 4px, #2b3338 4.5px 5px, transparent 5.5px),
+      var(--chrome-bar) top / 100% 18px no-repeat,
+      linear-gradient(180deg, rgb(0 0 0 / 0.55), transparent 7px) 0 18px / 100% 10px no-repeat,
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.022) 0 1px, transparent 1px 4px),
+      radial-gradient(120% 70% at 30% 0%, #2a2f34, transparent 70%),
+      linear-gradient(180deg, #1d2125, #0e1012);
   }
   .flap[hidden] {
     display: none;
   }
-  /* Hanger bar at the top and reflector strip at the bottom of the flap. */
-  .flap::before {
-    content: '';
-    position: absolute;
-    inset: 0 0 auto;
-    height: 5px;
-    border-radius: 4px 4px 0 0;
-    background: var(--chrome-h);
-  }
   .flap::after {
     content: '';
     position: absolute;
-    left: 1.1rem;
-    right: 1.1rem;
-    bottom: 0.75rem;
-    height: 4px;
-    border-radius: 2px;
-    background: repeating-linear-gradient(90deg, var(--red) 0 14px, #e9eef0 14px 28px);
-    opacity: 0.85;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 22px;
+    background:
+      repeating-linear-gradient(90deg, var(--red) 0 16px, #f1f4f5 16px 32px) center 8px / calc(100% - 52px) 6px no-repeat,
+      var(--chrome-bar);
   }
   .plate {
-    font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.95rem);
+    font-size: clamp(1.75rem, 1.35rem + 1vw, 2.3rem);
     font-weight: 900;
     line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  /* Smaller lettering gets a shallower horizon so the brand stays legible on rubber. */
+  .plate .chrome {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7f9 48%, #c9d2d8 60%, #eef1f3 78%, #ffffff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .panel-note {
+    font-size: 0.9rem;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
   }
   .tags {
     display: flex;
@@ -426,30 +447,46 @@ const tagMessage = (short: string, brand: string, code: string) =>
     position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 2.25rem;
-    padding: 0.3rem 0.75rem 0.3rem 1.2rem;
-    border-radius: 4px;
-    background: var(--chrome-h);
-    color: var(--cab-deep);
+    min-height: 2.3rem;
+    padding: 0.3rem 1.25rem;
+    border-radius: 3px;
+    /* Stamped brushed-steel tag. */
+    background:
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.22) 0 1px, transparent 1px 2px, rgb(0 0 0 / 0.05) 2px 3px),
+      linear-gradient(180deg, #f2f5f7 0%, #c9d2d8 55%, #aeb9c0 100%);
+    color: #17252d;
     font-family: var(--font-label);
     font-size: 1.05rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     text-decoration: none;
+    text-shadow: 0 1px 0 rgb(255 255 255 / 0.75);
     white-space: nowrap;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -2px 0 rgb(0 0 0 / 0.18), 0 3px 6px -2px rgb(0 0 0 / 0.8);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.95),
+      inset 0 -1px 0 rgb(0 0 0 / 0.35),
+      inset 0 0 0 1px rgb(0 0 0 / 0.18),
+      0 3px 5px -2px rgb(0 0 0 / 0.9);
     transition: transform 160ms var(--ease-out), background 160ms, opacity 200ms, filter 200ms;
   }
-  /* Rivet. */
-  .tag::before {
+  /* Two rivets hold each tag to the rubber. */
+  .tag::before,
+  .tag::after {
     content: '';
     position: absolute;
-    left: 0.45rem;
-    width: 0.38rem;
-    height: 0.38rem;
+    top: 50%;
+    width: 0.4rem;
+    height: 0.4rem;
+    margin-top: -0.2rem;
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 35%, #fff, #6f7c83);
-    box-shadow: 0 1px 0 rgb(0 0 0 / 0.4);
+    background: radial-gradient(circle at 35% 30%, #ffffff, #8794a0 60%, #3b454c);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.55);
+  }
+  .tag::before {
+    left: 0.42rem;
+  }
+  .tag::after {
+    right: 0.42rem;
   }
   .tag:hover {
     transform: translateY(-2px);

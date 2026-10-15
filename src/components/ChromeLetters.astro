@@ -1,0 +1,64 @@
+---
+// Chrome trim lettering rendered as SVG: horizon-band chrome fill, specular bevel,
+// dark outline and cast shadow. Decorative only; callers keep the live text in the DOM.
+interface Props {
+  lines: string[];
+  class?: string;
+  /** viewBox width; tune so the longest line fills it. */
+  width?: number;
+  size?: number;
+  lineHeight?: number;
+  style?: string;
+}
+const { lines, class: className, style, width = 1000, size = 150, lineHeight = 0.9 } = Astro.props;
+const uid = `cl${Math.abs([...lines.join('')].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)).toString(36)}`;
+const step = size * lineHeight;
+const top = size * 0.98;
+const height = Math.ceil(top + step * (lines.length - 1) + size * 0.12);
+---
+
+<svg
+  class={className}
+  style={style}
+  viewBox={`0 0 ${width} ${height}`}
+  role="presentation"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <linearGradient id={`${uid}-fill`} x1="0" y1="0" x2="0" y2={step} gradientUnits="userSpaceOnUse" spreadMethod="repeat">
+      <stop offset="0" stop-color="#fdfeff" />
+      <stop offset="0.18" stop-color="#d5dfe6" />
+      <stop offset="0.44" stop-color="#f4f8fa" />
+      <stop offset="0.5" stop-color="#57636c" />
+      <stop offset="0.57" stop-color="#2e363d" />
+      <stop offset="0.72" stop-color="#9d9283" />
+      <stop offset="0.9" stop-color="#ebe6de" />
+      <stop offset="1" stop-color="#fdfeff" />
+    </linearGradient>
+    <filter id={`${uid}-bevel`} x="-5%" y="-10%" width="110%" height="125%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b" />
+      <feSpecularLighting in="b" surfaceScale="4" specularConstant="1.25" specularExponent="22" lighting-color="#ffffff" result="s">
+        <fePointLight x={width * 0.3} y="-200" z="300" />
+      </feSpecularLighting>
+      <feComposite in="s" in2="SourceAlpha" operator="in" result="sc" />
+      <feComposite in="SourceGraphic" in2="sc" operator="arithmetic" k2="1" k3="0.9" />
+    </filter>
+    <filter id={`${uid}-shadow`} x="-5%" y="-10%" width="110%" height="140%">
+      <feDropShadow dx="0" dy={size * 0.05} stdDeviation={size * 0.06} flood-color="#000" flood-opacity="0.6" />
+    </filter>
+  </defs>
+  <g
+    font-family="'Big Shoulders Display Variable', 'Barlow Condensed', sans-serif"
+    font-weight="900"
+    font-size={size}
+    letter-spacing="1"
+  >
+    <g filter={`url(#${uid}-shadow)`} fill="#02151d" stroke="#02151d" stroke-width={size * 0.06} stroke-linejoin="round">
+      {lines.map((l, i) => <text x="4" y={top + i * step}>{l}</text>)}
+    </g>
+    <g fill={`url(#${uid}-fill)`} filter={`url(#${uid}-bevel)`}>
+      {lines.map((l, i) => <text x="4" y={top + i * step}>{l}</text>)}
+    </g>
+  </g>
+</svg>

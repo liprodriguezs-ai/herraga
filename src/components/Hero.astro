@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+import ChromeLetters from './ChromeLetters.astro';
 import logoDark from '../assets/brand/logo-dark.png';
 import { heroBrands, whatsappHref, company } from '../data/site';
 ---
@@ -13,7 +14,8 @@ import { heroBrands, whatsappHref, company } from '../data/site';
   <div class="wrap cab">
     <div class="copy">
       <h1 id="hero-title">
-        <span class="headline chrome">La fuerza detrás de tu motor</span>
+        <span class="visually-hidden">La fuerza detrás de tu motor:</span>
+        <ChromeLetters class="headline" lines={['LA FUERZA DETRÁS', 'DE TU MOTOR']} width={1040} size={150} lineHeight={0.92} />
         <span class="subline">Refacciones diésel para motores de rango pesado</span>
       </h1>
 
@@ -40,7 +42,6 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     </div>
 
     <div class="grille" aria-hidden="true">
-      <div class="slats"></div>
       <div class="emblem">
         <Image src={logoDark} alt="" width={260} height={170} loading="eager" />
         <span class="emblem-values">{company.values.join(' · ')}</span>
@@ -114,25 +115,26 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     display: grid;
     gap: 1.1rem;
   }
-  .headline {
+  /* Chrome nameplate: SVG lettering; it brightens once the roof lights finish switching on. */
+  h1 :global(.headline) {
     display: block;
-    font-size: var(--step-5);
-    font-weight: 900;
-    line-height: 0.88;
-    letter-spacing: -0.005em;
-    background-size: 100% 100%;
-    animation: glint 1400ms var(--ease-out) 900ms both;
+    width: 100%;
+    max-width: 44rem;
+    height: auto;
+    overflow: visible;
+    animation: polish 1100ms var(--ease-out) 700ms both;
   }
-  @keyframes glint {
+  @keyframes polish {
     from {
-      background-image: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.95) 45%, transparent 60%), var(--chrome);
-      background-size: 300% 100%, 100% 100%;
-      background-position: 120% 0, 0 0;
+      filter: brightness(0.55) saturate(0.6);
+      clip-path: inset(0 100% 0 0);
+    }
+    60% {
+      filter: brightness(1.25);
     }
     to {
-      background-image: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.95) 45%, transparent 60%), var(--chrome);
-      background-size: 300% 100%, 100% 100%;
-      background-position: -60% 0, 0 0;
+      filter: brightness(1);
+      clip-path: inset(0 0 0 0);
     }
   }
   .subline {
@@ -194,30 +196,9 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     width: 100%;
     max-width: 30rem;
     justify-self: end;
-    padding: 14px;
-    border-radius: 18px 18px 10px 10px;
-    background: var(--chrome-h);
-    box-shadow:
-      inset 0 2px 0 rgb(255 255 255 / 0.7),
-      0 30px 60px -30px rgb(0 0 0 / 0.9),
-      0 12px 24px -12px rgb(0 0 0 / 0.6);
-  }
-  .slats {
-    position: absolute;
-    inset: 14px;
-    border-radius: 10px 10px 4px 4px;
-    background:
-      linear-gradient(180deg, rgb(0 0 0 / 0.45), transparent 22%, transparent 78%, rgb(0 0 0 / 0.55)),
-      repeating-linear-gradient(
-        90deg,
-        #0a1114 0 7px,
-        #8d99a0 7px 8px,
-        #f2f6f8 8px 11px,
-        #9aa6ad 11px 14px,
-        #2a3439 14px 15px,
-        #0a1114 15px 22px
-      );
-    box-shadow: inset 0 0 0 2px rgb(0 0 0 / 0.5), inset 0 20px 30px -10px rgb(0 0 0 / 0.6);
+    border-radius: 26px;
+    background: url('/grille.svg') center / 100% 100% no-repeat;
+    filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.65));
   }
   .emblem {
     position: absolute;
@@ -256,6 +237,27 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     color: var(--cab-deep);
     box-shadow: inset 0 2px 0 rgb(255 255 255 / 0.8), inset 0 -3px 0 rgb(0 0 0 / 0.25);
   }
+  /* Full-strength chrome lips above and below the lettered face of the bumper. */
+  .bumper::before,
+  .bumper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 9px;
+    background: var(--chrome-bar);
+  }
+  .bumper::before {
+    top: 0;
+  }
+  .bumper::after {
+    bottom: 0;
+    transform: scaleY(-1);
+  }
+  .brand-row {
+    position: relative;
+    z-index: 1;
+  }
   .brand-row {
     display: flex;
     flex-wrap: wrap;
@@ -278,12 +280,11 @@ import { heroBrands, whatsappHref, company } from '../data/site';
       padding-bottom: var(--space-l);
     }
     .grille {
-      order: -1;
       justify-self: stretch;
       max-width: none;
       aspect-ratio: auto;
-      height: 11rem;
-      margin-bottom: var(--space-s);
+      height: 10rem;
+      background-size: cover;
     }
     .emblem {
       width: auto;
@@ -309,7 +310,10 @@ import { heroBrands, whatsappHref, company } from '../data/site';
       flex: 1 1 100%;
     }
     .grille {
-      height: 8.5rem;
+      height: 7.5rem;
+    }
+    .lights {
+      padding-block: 1.1rem 0;
     }
   }
 </style>

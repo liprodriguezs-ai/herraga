@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Classic chrome: sky above the horizon line, dark horizon, warm ground reflection below. -->
+    <linearGradient id="surround" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdfeff"/>
+      <stop offset="0.28" stop-color="#c7d3dc"/>
+      <stop offset="0.47" stop-color="#eef3f7"/>
+      <stop offset="0.5" stop-color="#4b5660"/>
+      <stop offset="0.56" stop-color="#2b333a"/>
+      <stop offset="0.7" stop-color="#9a8f80"/>
+      <stop offset="0.88" stop-color="#e2ddd5"/>
+      <stop offset="1" stop-color="#fbfaf8"/>
+    </linearGradient>
+    <!-- One cylindrical slat: dark edges, hot specular core, secondary reflection. -->
+    <linearGradient id="slat" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0b1013"/>
+      <stop offset="0.14" stop-color="#4f5b62"/>
+      <stop offset="0.32" stop-color="#e7edf0"/>
+      <stop offset="0.42" stop-color="#ffffff"/>
+      <stop offset="0.52" stop-color="#b9c4ca"/>
+      <stop offset="0.7" stop-color="#5d6970"/>
+      <stop offset="0.84" stop-color="#9aa6ad"/>
+      <stop offset="1" stop-color="#0b1013"/>
+    </linearGradient>
+    <linearGradient id="depth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity="0.75"/>
+      <stop offset="0.18" stop-color="#000" stop-opacity="0"/>
+      <stop offset="0.8" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.8"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0.25" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="#fff" stop-opacity="0.22"/>
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="slats" width="22" height="500" patternUnits="userSpaceOnUse" x="6">
+      <rect width="22" height="500" fill="#05090b"/>
+      <rect x="3" width="15" height="500" fill="url(#slat)"/>
+    </pattern>
+    <filter id="bevel" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="b"/>
+      <feSpecularLighting in="b" surfaceScale="5" specularConstant="1.1" specularExponent="28" lighting-color="#ffffff" result="s">
+        <fePointLight x="80" y="-120" z="260"/>
+      </feSpecularLighting>
+      <feComposite in="s" in2="SourceAlpha" operator="in" result="sc"/>
+      <feComposite in="SourceGraphic" in2="sc" operator="arithmetic" k2="1" k3="0.85"/>
+    </filter>
+  </defs>
+
+  <rect x="2" y="2" width="396" height="496" rx="26" fill="url(#surround)" filter="url(#bevel)"/>
+  <rect x="18" y="18" width="364" height="464" rx="14" fill="#05090b"/>
+  <rect x="22" y="22" width="356" height="456" rx="11" fill="url(#slats)"/>
+  <rect x="22" y="22" width="356" height="456" rx="11" fill="url(#depth)"/>
+  <rect x="22" y="22" width="356" height="456" rx="11" fill="url(#sheen)"/>
+  <rect x="18.5" y="18.5" width="363" height="463" rx="14" fill="none" stroke="#000" stroke-opacity="0.6" stroke-width="3"/>
+</svg>

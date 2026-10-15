@@ -1,0 +1,755 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T00:58:35+00:00",
+  "title": "Design System: HERRAGA Refacciones",
+  "extensions": {
+    "colorMeta": {
+      "cab": {
+        "role": "secondary",
+        "displayName": "Cab Navy",
+        "canonical": "#08303f",
+        "tonalRamp": [
+          "oklch(15% 0.050 228.0)",
+          "oklch(25% 0.050 228.0)",
+          "oklch(37% 0.050 228.0)",
+          "oklch(49% 0.050 228.0)",
+          "oklch(61% 0.050 228.0)",
+          "oklch(73% 0.050 228.0)",
+          "oklch(84% 0.050 228.0)",
+          "oklch(95% 0.050 228.0)"
+        ]
+      },
+      "cab-deep": {
+        "role": "secondary",
+        "displayName": "Deep Cab",
+        "canonical": "#041d27",
+        "tonalRamp": [
+          "oklch(15% 0.037 227.6)",
+          "oklch(25% 0.037 227.6)",
+          "oklch(37% 0.037 227.6)",
+          "oklch(49% 0.037 227.6)",
+          "oklch(61% 0.037 227.6)",
+          "oklch(73% 0.037 227.6)",
+          "oklch(84% 0.037 227.6)",
+          "oklch(95% 0.037 227.6)"
+        ]
+      },
+      "cab-line": {
+        "role": "secondary",
+        "displayName": "Cab Line",
+        "canonical": "#1a4a5c",
+        "tonalRamp": [
+          "oklch(15% 0.059 226.4)",
+          "oklch(25% 0.059 226.4)",
+          "oklch(37% 0.059 226.4)",
+          "oklch(49% 0.059 226.4)",
+          "oklch(61% 0.059 226.4)",
+          "oklch(73% 0.059 226.4)",
+          "oklch(84% 0.059 226.4)",
+          "oklch(95% 0.059 226.4)"
+        ]
+      },
+      "cab-glow": {
+        "role": "secondary",
+        "displayName": "Cab Glow",
+        "canonical": "#0d4256",
+        "tonalRamp": [
+          "oklch(15% 0.063 228.5)",
+          "oklch(25% 0.063 228.5)",
+          "oklch(37% 0.063 228.5)",
+          "oklch(49% 0.063 228.5)",
+          "oklch(61% 0.063 228.5)",
+          "oklch(73% 0.063 228.5)",
+          "oklch(84% 0.063 228.5)",
+          "oklch(95% 0.063 228.5)"
+        ]
+      },
+      "cab-enamel": {
+        "role": "secondary",
+        "displayName": "Cab Enamel",
+        "canonical": "#0b3647",
+        "tonalRamp": [
+          "oklch(15% 0.054 229.2)",
+          "oklch(25% 0.054 229.2)",
+          "oklch(37% 0.054 229.2)",
+          "oklch(49% 0.054 229.2)",
+          "oklch(61% 0.054 229.2)",
+          "oklch(73% 0.054 229.2)",
+          "oklch(84% 0.054 229.2)",
+          "oklch(95% 0.054 229.2)"
+        ]
+      },
+      "cab-well": {
+        "role": "secondary",
+        "displayName": "Cab Well",
+        "canonical": "#062634",
+        "tonalRamp": [
+          "oklch(15% 0.045 231.2)",
+          "oklch(25% 0.045 231.2)",
+          "oklch(37% 0.045 231.2)",
+          "oklch(49% 0.045 231.2)",
+          "oklch(61% 0.045 231.2)",
+          "oklch(73% 0.045 231.2)",
+          "oklch(84% 0.045 231.2)",
+          "oklch(95% 0.045 231.2)"
+        ]
+      },
+      "cab-well-line": {
+        "role": "secondary",
+        "displayName": "Cab Well Line",
+        "canonical": "#23495a",
+        "tonalRamp": [
+          "oklch(15% 0.052 229.3)",
+          "oklch(25% 0.052 229.3)",
+          "oklch(37% 0.052 229.3)",
+          "oklch(49% 0.052 229.3)",
+          "oklch(61% 0.052 229.3)",
+          "oklch(73% 0.052 229.3)",
+          "oklch(84% 0.052 229.3)",
+          "oklch(95% 0.052 229.3)"
+        ]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "HERRAGA Red",
+        "canonical": "#c0101f",
+        "tonalRamp": [
+          "oklch(15% 0.200 25.7)",
+          "oklch(25% 0.200 25.7)",
+          "oklch(37% 0.200 25.7)",
+          "oklch(49% 0.200 25.7)",
+          "oklch(61% 0.200 25.7)",
+          "oklch(73% 0.200 25.7)",
+          "oklch(84% 0.200 25.7)",
+          "oklch(95% 0.200 25.7)"
+        ]
+      },
+      "red-hover": {
+        "role": "primary",
+        "displayName": "HERRAGA Red Hover",
+        "canonical": "#d4192a",
+        "tonalRamp": [
+          "oklch(15% 0.200 24.8)",
+          "oklch(25% 0.200 24.8)",
+          "oklch(37% 0.200 24.8)",
+          "oklch(49% 0.200 24.8)",
+          "oklch(61% 0.200 24.8)",
+          "oklch(73% 0.200 24.8)",
+          "oklch(84% 0.200 24.8)",
+          "oklch(95% 0.200 24.8)"
+        ]
+      },
+      "red-deep": {
+        "role": "primary",
+        "displayName": "Deep Red",
+        "canonical": "#8f0915",
+        "tonalRamp": [
+          "oklch(15% 0.162 25.5)",
+          "oklch(25% 0.162 25.5)",
+          "oklch(37% 0.162 25.5)",
+          "oklch(49% 0.162 25.5)",
+          "oklch(61% 0.162 25.5)",
+          "oklch(73% 0.162 25.5)",
+          "oklch(84% 0.162 25.5)",
+          "oklch(95% 0.162 25.5)"
+        ]
+      },
+      "red-bright": {
+        "role": "primary",
+        "displayName": "Signal Red",
+        "canonical": "#ff3b47",
+        "tonalRamp": [
+          "oklch(15% 0.200 23.5)",
+          "oklch(25% 0.200 23.5)",
+          "oklch(37% 0.200 23.5)",
+          "oklch(49% 0.200 23.5)",
+          "oklch(61% 0.200 23.5)",
+          "oklch(73% 0.200 23.5)",
+          "oklch(84% 0.200 23.5)",
+          "oklch(95% 0.200 23.5)"
+        ]
+      },
+      "amber": {
+        "role": "tertiary",
+        "displayName": "Clearance Amber",
+        "canonical": "#ffb22e",
+        "tonalRamp": [
+          "oklch(15% 0.160 74.9)",
+          "oklch(25% 0.160 74.9)",
+          "oklch(37% 0.160 74.9)",
+          "oklch(49% 0.160 74.9)",
+          "oklch(61% 0.160 74.9)",
+          "oklch(73% 0.160 74.9)",
+          "oklch(84% 0.160 74.9)",
+          "oklch(95% 0.160 74.9)"
+        ]
+      },
+      "amber-hot": {
+        "role": "tertiary",
+        "displayName": "Lamp Core Amber",
+        "canonical": "#ffd27a",
+        "tonalRamp": [
+          "oklch(15% 0.118 82.9)",
+          "oklch(25% 0.118 82.9)",
+          "oklch(37% 0.118 82.9)",
+          "oklch(49% 0.118 82.9)",
+          "oklch(61% 0.118 82.9)",
+          "oklch(73% 0.118 82.9)",
+          "oklch(84% 0.118 82.9)",
+          "oklch(95% 0.118 82.9)"
+        ]
+      },
+      "rubber": {
+        "role": "neutral",
+        "displayName": "Mud-Flap Rubber",
+        "canonical": "#15181b",
+        "tonalRamp": [
+          "oklch(15% 0.008 248.2)",
+          "oklch(25% 0.008 248.2)",
+          "oklch(37% 0.008 248.2)",
+          "oklch(49% 0.008 248.2)",
+          "oklch(61% 0.008 248.2)",
+          "oklch(73% 0.008 248.2)",
+          "oklch(84% 0.008 248.2)",
+          "oklch(95% 0.008 248.2)"
+        ]
+      },
+      "rubber-well": {
+        "role": "neutral",
+        "displayName": "Rubber Well",
+        "canonical": "#0d0f11",
+        "tonalRamp": [
+          "oklch(15% 0.005 248.1)",
+          "oklch(25% 0.005 248.1)",
+          "oklch(37% 0.005 248.1)",
+          "oklch(49% 0.005 248.1)",
+          "oklch(61% 0.005 248.1)",
+          "oklch(73% 0.005 248.1)",
+          "oklch(84% 0.005 248.1)",
+          "oklch(95% 0.005 248.1)"
+        ]
+      },
+      "rubber-line": {
+        "role": "neutral",
+        "displayName": "Rubber Line",
+        "canonical": "#3a4248",
+        "tonalRamp": [
+          "oklch(15% 0.015 240.3)",
+          "oklch(25% 0.015 240.3)",
+          "oklch(37% 0.015 240.3)",
+          "oklch(49% 0.015 240.3)",
+          "oklch(61% 0.015 240.3)",
+          "oklch(73% 0.015 240.3)",
+          "oklch(84% 0.015 240.3)",
+          "oklch(95% 0.015 240.3)"
+        ]
+      },
+      "paint": {
+        "role": "neutral",
+        "displayName": "Cab White",
+        "canonical": "#f3f5f6",
+        "tonalRamp": [
+          "oklch(15% 0.003 228.8)",
+          "oklch(25% 0.003 228.8)",
+          "oklch(37% 0.003 228.8)",
+          "oklch(49% 0.003 228.8)",
+          "oklch(61% 0.003 228.8)",
+          "oklch(73% 0.003 228.8)",
+          "oklch(84% 0.003 228.8)",
+          "oklch(95% 0.003 228.8)"
+        ]
+      },
+      "paint-2": {
+        "role": "neutral",
+        "displayName": "Cab White Hairline",
+        "canonical": "#e4e9ec",
+        "tonalRamp": [
+          "oklch(15% 0.007 233.6)",
+          "oklch(25% 0.007 233.6)",
+          "oklch(37% 0.007 233.6)",
+          "oklch(49% 0.007 233.6)",
+          "oklch(61% 0.007 233.6)",
+          "oklch(73% 0.007 233.6)",
+          "oklch(84% 0.007 233.6)",
+          "oklch(95% 0.007 233.6)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(25% 0.000 89.9)",
+          "oklch(37% 0.000 89.9)",
+          "oklch(49% 0.000 89.9)",
+          "oklch(61% 0.000 89.9)",
+          "oklch(73% 0.000 89.9)",
+          "oklch(84% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0b1b22",
+        "tonalRamp": [
+          "oklch(15% 0.026 228.2)",
+          "oklch(25% 0.026 228.2)",
+          "oklch(37% 0.026 228.2)",
+          "oklch(49% 0.026 228.2)",
+          "oklch(61% 0.026 228.2)",
+          "oklch(73% 0.026 228.2)",
+          "oklch(84% 0.026 228.2)",
+          "oklch(95% 0.026 228.2)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#3d5360",
+        "tonalRamp": [
+          "oklch(15% 0.035 234.6)",
+          "oklch(25% 0.035 234.6)",
+          "oklch(37% 0.035 234.6)",
+          "oklch(49% 0.035 234.6)",
+          "oklch(61% 0.035 234.6)",
+          "oklch(73% 0.035 234.6)",
+          "oklch(84% 0.035 234.6)",
+          "oklch(95% 0.035 234.6)"
+        ]
+      },
+      "text-on-cab": {
+        "role": "neutral",
+        "displayName": "Text on Cab",
+        "canonical": "#c9d6dc",
+        "tonalRamp": [
+          "oklch(15% 0.016 227.0)",
+          "oklch(25% 0.016 227.0)",
+          "oklch(37% 0.016 227.0)",
+          "oklch(49% 0.016 227.0)",
+          "oklch(61% 0.016 227.0)",
+          "oklch(73% 0.016 227.0)",
+          "oklch(84% 0.016 227.0)",
+          "oklch(95% 0.016 227.0)"
+        ]
+      },
+      "text-on-cab-muted": {
+        "role": "neutral",
+        "displayName": "Muted Text on Cab",
+        "canonical": "#9fb0b8",
+        "tonalRamp": [
+          "oklch(15% 0.022 227.6)",
+          "oklch(25% 0.022 227.6)",
+          "oklch(37% 0.022 227.6)",
+          "oklch(49% 0.022 227.6)",
+          "oklch(61% 0.022 227.6)",
+          "oklch(73% 0.022 227.6)",
+          "oklch(84% 0.022 227.6)",
+          "oklch(95% 0.022 227.6)"
+        ]
+      },
+      "text-on-rubber-muted": {
+        "role": "neutral",
+        "displayName": "Muted Text on Rubber",
+        "canonical": "#8d999f",
+        "tonalRamp": [
+          "oklch(15% 0.016 229.1)",
+          "oklch(25% 0.016 229.1)",
+          "oklch(37% 0.016 229.1)",
+          "oklch(49% 0.016 229.1)",
+          "oklch(61% 0.016 229.1)",
+          "oklch(73% 0.016 229.1)",
+          "oklch(84% 0.016 229.1)",
+          "oklch(95% 0.016 229.1)"
+        ]
+      },
+      "chrome-2": {
+        "role": "neutral",
+        "displayName": "Chrome Tint",
+        "canonical": "#d9e1e6",
+        "tonalRamp": [
+          "oklch(15% 0.011 234.8)",
+          "oklch(25% 0.011 234.8)",
+          "oklch(37% 0.011 234.8)",
+          "oklch(49% 0.011 234.8)",
+          "oklch(61% 0.011 234.8)",
+          "oklch(73% 0.011 234.8)",
+          "oklch(84% 0.011 234.8)",
+          "oklch(95% 0.011 234.8)"
+        ]
+      },
+      "chrome-5": {
+        "role": "neutral",
+        "displayName": "Chrome Shadow Tint",
+        "canonical": "#a9b5bc",
+        "tonalRamp": [
+          "oklch(15% 0.017 233.1)",
+          "oklch(25% 0.017 233.1)",
+          "oklch(37% 0.017 233.1)",
+          "oklch(49% 0.017 233.1)",
+          "oklch(61% 0.017 233.1)",
+          "oklch(73% 0.017 233.1)",
+          "oklch(84% 0.017 233.1)",
+          "oklch(95% 0.017 233.1)"
+        ]
+      },
+      "bezel-light": {
+        "role": "neutral",
+        "displayName": "Bezel Light Ring",
+        "canonical": "#c9d2d7",
+        "tonalRamp": [
+          "oklch(15% 0.012 231.7)",
+          "oklch(25% 0.012 231.7)",
+          "oklch(37% 0.012 231.7)",
+          "oklch(49% 0.012 231.7)",
+          "oklch(61% 0.012 231.7)",
+          "oklch(73% 0.012 231.7)",
+          "oklch(84% 0.012 231.7)",
+          "oklch(95% 0.012 231.7)"
+        ]
+      },
+      "bezel-dark": {
+        "role": "neutral",
+        "displayName": "Bezel Dark Ring",
+        "canonical": "#5c6a71",
+        "tonalRamp": [
+          "oklch(15% 0.020 229.3)",
+          "oklch(25% 0.020 229.3)",
+          "oklch(37% 0.020 229.3)",
+          "oklch(49% 0.020 229.3)",
+          "oklch(61% 0.020 229.3)",
+          "oklch(73% 0.020 229.3)",
+          "oklch(84% 0.020 229.3)",
+          "oklch(95% 0.020 229.3)"
+        ]
+      },
+      "whatsapp-green": {
+        "role": "neutral",
+        "displayName": "WhatsApp Green",
+        "canonical": "#1faa53",
+        "tonalRamp": [
+          "oklch(15% 0.169 150.0)",
+          "oklch(25% 0.169 150.0)",
+          "oklch(37% 0.169 150.0)",
+          "oklch(49% 0.169 150.0)",
+          "oklch(61% 0.169 150.0)",
+          "oklch(73% 0.169 150.0)",
+          "oklch(84% 0.169 150.0)",
+          "oklch(95% 0.169 150.0)"
+        ]
+      }
+    },
+    "chromeMaterials": [
+      {
+        "name": "chrome-h",
+        "value": "linear-gradient(100deg, transparent 18%, rgb(255 255 255 / 0.6) 30%, transparent 38%), linear-gradient(180deg, #ffffff 0%, #e3eaef 38%, #b7c2c9 52%, #c9d1d6 60%, #ddd8d0 82%, #f4f2ee 100%)",
+        "purpose": "Text-bearing chrome plate: buttons, bumper face, active tab, emblem bezels, photo frames, social discs."
+      },
+      {
+        "name": "chrome-bar",
+        "value": "linear-gradient(180deg, #ffffff 0%, #dbe4ea 30%, #f3f7f9 46%, #5d6973 52%, #3a434a 60%, #a59b8d 78%, #ece8e1 100%)",
+        "purpose": "Trim without lettering: header edge, bumper lips, flap hanger and weight bar."
+      },
+      {
+        "name": "chrome",
+        "value": "linear-gradient(180deg, #fdfeff 0%, #d5dfe6 22%, #f4f8fa 46%, #57636c 52%, #2e363d 58%, #9d9283 74%, #ebe6de 92%, #fdfeff 100%)",
+        "purpose": "Lettering horizon; same stops in ChromeLetters SVG and the grille surround."
+      },
+      {
+        "name": "plate-lettering-shallow",
+        "value": "linear-gradient(180deg, #ffffff 0%, #f4f7f9 48%, #c9d2d8 60%, #eef1f3 78%, #ffffff 100%)",
+        "purpose": "Small chrome lettering (mud-flap brand plates) so it stays legible on rubber."
+      }
+    ],
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Section titles, uppercase; hero and two section titles render as chrome SVG lettering at weight 900."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Pillar row titles, catalog panel titles, newsletter title."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Product names and big phone numbers."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Section ledes, max 60ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphs, max ~52ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, nav, form labels, engine tags, chips; uppercase Barlow Condensed."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-lift",
+        "value": "0 10px 24px -12px rgb(4 29 39 / 0.45), 0 2px 4px -2px rgb(4 29 39 / 0.3)",
+        "purpose": "Product photos and pillar frames on white paint."
+      },
+      {
+        "name": "bevelled-plate",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 8px 18px -10px rgb(0 0 0 / 0.6)",
+        "purpose": "Buttons at rest."
+      },
+      {
+        "name": "bevelled-plate-hover",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 14px 24px -12px rgb(0 0 0 / 0.65)",
+        "purpose": "Buttons on hover, with a 2px lift."
+      },
+      {
+        "name": "polished-bezel",
+        "value": "0 0 0 4px #c9d2d7, 0 0 0 6px #5c6a71, 0 30px 60px -30px rgb(4 29 39 / 0.8)",
+        "purpose": "Two-ring chrome bezel around dark panels (branch list, quote form) and catalog photos."
+      },
+      {
+        "name": "well",
+        "value": "inset 0 2px 6px rgb(0 0 0 / 0.6)",
+        "purpose": "Recessed controls: search field, tab rail, emblem enamel."
+      },
+      {
+        "name": "lamp-glow",
+        "value": "0 0 0 2px #2b3a40, 0 0 0 3px rgb(255 255 255 / 0.25), 0 0 18px 4px rgb(255 178 46 / 0.55), 0 6px 40px 10px rgb(255 178 46 / 0.25)",
+        "purpose": "Amber clearance lights; reduced versions on the active switch and matched tags."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid #ffb22e; outline-offset: 3px",
+        "purpose": "Global :focus-visible."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Every state transition and entrance."
+      },
+      {
+        "name": "state-fast",
+        "value": "160-200ms",
+        "purpose": "Hover color, tag lift, field border, tab change."
+      },
+      {
+        "name": "button",
+        "value": "180ms",
+        "purpose": "Button lift, shadow and background."
+      },
+      {
+        "name": "menu-unroll",
+        "value": "320ms clip-path",
+        "purpose": "Mobile menu open/close."
+      },
+      {
+        "name": "fab-collapse",
+        "value": "380ms max-width/padding",
+        "purpose": "WhatsApp pill collapsing to a disc past the hero."
+      },
+      {
+        "name": "ignite",
+        "value": "900ms, 180ms + i*110ms stagger",
+        "purpose": "Hero clearance lights switching on in sequence."
+      },
+      {
+        "name": "polish",
+        "value": "1100ms, 700ms delay, clip-path wipe left to right",
+        "purpose": "Hero chrome headline revealed after the lights."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "durations 0.01ms, smooth scroll off",
+        "purpose": "prefers-reduced-motion collapses all motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "420px"
+      },
+      {
+        "name": "sm",
+        "value": "520px"
+      },
+      {
+        "name": "form",
+        "value": "560px"
+      },
+      {
+        "name": "shelf-1",
+        "value": "640px"
+      },
+      {
+        "name": "stack",
+        "value": "900px"
+      },
+      {
+        "name": "nav",
+        "value": "920px"
+      },
+      {
+        "name": "footer",
+        "value": "1000px"
+      },
+      {
+        "name": "shelf-2",
+        "value": "1024px"
+      },
+      {
+        "name": "phone-label",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (WhatsApp)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "HERRAGA red trim plate; always the WhatsApp action.",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12.05 21.8a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.43 9.88-9.88 9.88zm8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z\"/></svg>Cotiza por WhatsApp</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0.7rem 1.5rem; border: 0; border-radius: 6px; background: var(--btn-bg, #c0101f); color: var(--btn-fg, #fff); font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 8px 18px -10px rgb(0 0 0 / 0.6); transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn svg { width: 1.35em; height: 1.35em; } .ds-btn:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 14px 24px -12px rgb(0 0 0 / 0.65); } .ds-btn:active { transform: translateY(0); } .ds-btn:focus-visible { outline: 3px solid #ffb22e; outline-offset: 3px; } .ds-btn-primary:hover { --btn-bg: #d4192a; }"
+    },
+    {
+      "name": "Chrome Button",
+      "kind": "button",
+      "refersTo": "button-chrome",
+      "description": "Text-bearing chrome plate for secondary navigation and the quote submit on red.",
+      "html": "<a class=\"ds-btn ds-btn-chrome\" href=\"#\">Busca tu motor</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0.7rem 1.5rem; border: 0; border-radius: 6px; background: var(--btn-bg, #c0101f); color: var(--btn-fg, #fff); font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 8px 18px -10px rgb(0 0 0 / 0.6); transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn svg { width: 1.35em; height: 1.35em; } .ds-btn:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 14px 24px -12px rgb(0 0 0 / 0.65); } .ds-btn:active { transform: translateY(0); } .ds-btn:focus-visible { outline: 3px solid #ffb22e; outline-offset: 3px; } .ds-btn-chrome { --btn-fg: #041d27; background: linear-gradient(100deg, transparent 18%, rgb(255 255 255 / 0.6) 30%, transparent 38%), linear-gradient(180deg, #ffffff 0%, #e3eaef 38%, #b7c2c9 52%, #c9d1d6 60%, #ddd8d0 82%, #f4f2ee 100%); } .ds-btn-chrome:hover { filter: brightness(1.06); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Navy-ringed secondary action (phone call) on white paint.",
+      "html": "<a class=\"ds-btn ds-btn-ghost\" href=\"#\">Llámanos 664 514 9674</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 3.25rem; padding: 0.7rem 1.5rem; border: 0; border-radius: 6px; background: var(--btn-bg, #c0101f); color: var(--btn-fg, #fff); font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 8px 18px -10px rgb(0 0 0 / 0.6); transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1), background-color 180ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn svg { width: 1.35em; height: 1.35em; } .ds-btn:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.25), 0 14px 24px -12px rgb(0 0 0 / 0.65); } .ds-btn:active { transform: translateY(0); } .ds-btn:focus-visible { outline: 3px solid #ffb22e; outline-offset: 3px; } .ds-btn-ghost { --btn-bg: transparent; --btn-fg: #08303f; box-shadow: inset 0 0 0 2px currentColor; } .ds-btn-ghost:hover { --btn-bg: #08303f; --btn-fg: #fff; box-shadow: inset 0 0 0 2px #08303f; }"
+    },
+    {
+      "name": "Field on Cab",
+      "kind": "input",
+      "refersTo": "input-cab",
+      "description": "Recessed cab-well field used in the quote and newsletter forms.",
+      "html": "<div class=\"ds-field-wrap\"><label class=\"ds-label\" for=\"ds-q\">Marca y modelo de motor <span>*</span></label><input class=\"ds-input\" id=\"ds-q\" placeholder=\"Ej. Cummins ISX, Detroit Serie 60 DDEC 4\"></div>",
+      "css": ".ds-field-wrap { display: grid; gap: 0.4rem; padding: 1.25rem; background: #041d27; border-radius: 14px; } .ds-label { font-family: 'Barlow Condensed', Barlow, sans-serif; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #d9e1e6; } .ds-label span { color: #ff3b47; } .ds-input { width: 100%; min-height: 3.1rem; padding: 0.7rem 0.9rem; border: 2px solid #23495a; border-radius: 6px; background: #062634; color: #fff; font: 500 1.05rem/1.35 Barlow, system-ui, sans-serif; transition: border-color 160ms; } .ds-input::placeholder { color: #87a0ab; } .ds-input:focus { outline: none; border-color: #ffb22e; } .ds-input[aria-invalid='true'] { border-color: #ff3b47; }"
+    },
+    {
+      "name": "Engine Tag",
+      "kind": "chip",
+      "refersTo": "engine-tag",
+      "description": "Riveted brushed-steel tag per engine code; a WhatsApp link with the engine prefilled.",
+      "html": "<div class=\"ds-rubber\"><a class=\"ds-tag\" href=\"#\">ISX</a> <a class=\"ds-tag ds-tag-hit\" href=\"#\">DDEC 4</a> <a class=\"ds-tag ds-tag-miss\" href=\"#\">D13</a></div>",
+      "css": ".ds-rubber { display: flex; flex-wrap: wrap; gap: 0.45rem; padding: 1rem; background: linear-gradient(180deg, #1d2125, #0e1012); } .ds-tag { position: relative; display: inline-flex; align-items: center; min-height: 2.3rem; padding: 0.3rem 1.25rem; border-radius: 3px; background: repeating-linear-gradient(90deg, rgb(255 255 255 / 0.22) 0 1px, transparent 1px 2px, rgb(0 0 0 / 0.05) 2px 3px), linear-gradient(180deg, #f2f5f7 0%, #c9d2d8 55%, #aeb9c0 100%); color: #17252d; font-family: 'Barlow Condensed', Barlow, sans-serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; text-decoration: none; text-shadow: 0 1px 0 rgb(255 255 255 / 0.75); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.95), inset 0 -1px 0 rgb(0 0 0 / 0.35), inset 0 0 0 1px rgb(0 0 0 / 0.18), 0 3px 5px -2px rgb(0 0 0 / 0.9); transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), background 160ms, opacity 200ms, filter 200ms; } .ds-tag::before, .ds-tag::after { content: ''; position: absolute; top: 50%; width: 0.4rem; height: 0.4rem; margin-top: -0.2rem; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffffff, #8794a0 60%, #3b454c); } .ds-tag::before { left: 0.42rem; } .ds-tag::after { right: 0.42rem; } .ds-tag:hover { transform: translateY(-2px); background: linear-gradient(180deg, #ffd27a, #ffb22e); } .ds-tag:focus-visible { outline: 3px solid #ffb22e; outline-offset: 3px; } .ds-tag-hit { background: linear-gradient(180deg, #ffd27a, #ffb22e); box-shadow: 0 0 0 2px #ffb22e, 0 0 16px 2px rgb(255 178 46 / 0.55); } .ds-tag-miss { opacity: 0.28; filter: grayscale(1); }"
+    },
+    {
+      "name": "Mud Flap",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature container: rubber flap with riveted chrome hanger, chrome brand nameplate and a weight bar with reflective tape.",
+      "html": "<div class=\"ds-flap\"><h4 class=\"ds-plate\">CUMMINS</h4><div class=\"ds-flap-tags\"><span class=\"ds-flap-tag\">ISX</span><span class=\"ds-flap-tag\">N14</span></div></div>",
+      "css": ".ds-flap { position: relative; display: grid; gap: 0.8rem; width: 16rem; padding: 2.1rem 1.15rem 3.1rem; clip-path: polygon(3% 0, 97% 0, 100% calc(100% - 46px), calc(100% - 30px) 100%, 30px 100%, 0 calc(100% - 46px)); background: radial-gradient(circle at 18px 9px, #ffffff 0 1.5px, #8e9aa1 2.5px 4px, #2b3338 4.5px 5px, transparent 5.5px), radial-gradient(circle at calc(100% - 18px) 9px, #ffffff 0 1.5px, #8e9aa1 2.5px 4px, #2b3338 4.5px 5px, transparent 5.5px), linear-gradient(180deg, #ffffff 0%, #dbe4ea 30%, #f3f7f9 46%, #5d6973 52%, #3a434a 60%, #a59b8d 78%, #ece8e1 100%) top / 100% 18px no-repeat, linear-gradient(180deg, #1d2125, #0e1012); } .ds-flap::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: repeating-linear-gradient(90deg, #c0101f 0 16px, #f1f4f5 16px 32px) center 8px / calc(100% - 52px) 6px no-repeat, linear-gradient(180deg, #ffffff 0%, #dbe4ea 30%, #f3f7f9 46%, #5d6973 52%, #3a434a 60%, #a59b8d 78%, #ece8e1 100%); } .ds-plate { margin: 0; font-family: 'Big Shoulders Display Variable', 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 900; line-height: 1; background: linear-gradient(180deg, #ffffff 0%, #f4f7f9 48%, #c9d2d8 60%, #eef1f3 78%, #ffffff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; } .ds-flap-tags { display: flex; gap: 0.45rem; } .ds-flap-tag { padding: 0.3rem 1rem; border-radius: 3px; background: linear-gradient(180deg, #f2f5f7 0%, #c9d2d8 55%, #aeb9c0 100%); color: #17252d; font: 700 1.05rem 'Barlow Condensed', sans-serif; }"
+    },
+    {
+      "name": "Dash Switch Tabs",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Recessed tab rail on rubber; selected tab is a chrome plate with a lit amber lamp.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button class=\"ds-tab\" role=\"tab\" aria-selected=\"true\"><span class=\"ds-lamp\"></span>Medias reparaciones</button><button class=\"ds-tab\" role=\"tab\" aria-selected=\"false\"><span class=\"ds-lamp\"></span>Cabezas de cilindro</button></div>",
+      "css": ".ds-tabs { display: inline-flex; gap: 0.5rem; padding: 0.35rem; border-radius: 10px; background: #0d0f11; box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.6); } .ds-tab { display: flex; align-items: center; gap: 0.6rem; min-height: 2.9rem; padding: 0.5rem 1rem; border: 0; border-radius: 7px; background: transparent; color: #a9b5bc; font: 700 1.1rem 'Barlow Condensed', sans-serif; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background-color 200ms, color 200ms; } .ds-tab:hover { color: #fff; } .ds-tab:focus-visible { outline: 3px solid #ffb22e; outline-offset: 3px; } .ds-tab[aria-selected='true'] { background: linear-gradient(100deg, transparent 18%, rgb(255 255 255 / 0.6) 30%, transparent 38%), linear-gradient(180deg, #ffffff 0%, #e3eaef 38%, #b7c2c9 52%, #c9d1d6 60%, #ddd8d0 82%, #f4f2ee 100%); color: #041d27; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8), 0 4px 10px -4px rgb(0 0 0 / 0.8); } .ds-lamp { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: #3a4248; } [aria-selected='true'] .ds-lamp { background: #ffb22e; box-shadow: 0 0 10px 2px rgb(255 178 46 / 0.7); }"
+    },
+    {
+      "name": "Brand Emblem",
+      "kind": "card",
+      "refersTo": "emblem-engine",
+      "description": "Bolt-on chrome-bezel emblem with enamel centre: navy for engine brands, red for part brands.",
+      "html": "<div class=\"ds-emblems\"><span class=\"ds-emblem\"><span>DETROIT</span></span><span class=\"ds-emblem ds-emblem-part\"><span>HERRAGA</span></span></div>",
+      "css": ".ds-emblems { display: flex; gap: 0.9rem; padding: 1.5rem; background: #08303f; } .ds-emblem { padding: 4px; border-radius: 10px; background: linear-gradient(100deg, transparent 18%, rgb(255 255 255 / 0.6) 30%, transparent 38%), linear-gradient(180deg, #ffffff 0%, #e3eaef 38%, #b7c2c9 52%, #c9d1d6 60%, #ddd8d0 82%, #f4f2ee 100%); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 12px 20px -12px rgb(0 0 0 / 0.9); transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-emblem:hover { transform: translateY(-3px) rotate(-1deg); } .ds-emblem > span { display: block; padding: 0.7rem 1.2rem 0.6rem; border-radius: 7px; background: linear-gradient(180deg, #0b3647, #041d27); font: 900 1.6rem/1 'Big Shoulders Display Variable', 'Barlow Condensed', sans-serif; letter-spacing: 0.03em; color: #fff; box-shadow: inset 0 2px 6px rgb(0 0 0 / 0.6); } .ds-emblem-part > span { background: linear-gradient(180deg, #d01625, #8f0915); }"
+    },
+    {
+      "name": "Point Chip",
+      "kind": "chip",
+      "refersTo": "point-chip",
+      "description": "White pill with a red icon for payment and service points.",
+      "html": "<span class=\"ds-chip\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\"/><path d=\"M2 10h20\"/></svg>Pago con tarjeta</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.85rem 0.45rem 0.6rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #e4e9ec, 0 2px 6px -3px rgb(4 29 39 / 0.25); font: 600 1.05rem 'Barlow Condensed', sans-serif; letter-spacing: 0.03em; color: #08303f; } .ds-chip svg { width: 1.15rem; height: 1.15rem; color: #c0101f; }"
+    },
+    {
+      "name": "Clearance Lights",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Five amber roof lamps that ignite in sequence at the top of the hero.",
+      "html": "<div class=\"ds-lights\"><span style=\"--i:0\"></span><span style=\"--i:1\"></span><span style=\"--i:2\"></span><span style=\"--i:3\"></span><span style=\"--i:4\"></span></div>",
+      "css": ".ds-lights { display: flex; justify-content: center; gap: 2.5rem; padding: 1.6rem; background: #08303f; } .ds-lights span { width: 3rem; height: 1rem; border-radius: 999px; background: radial-gradient(60% 90% at 50% 35%, #ffd27a, #ffb22e 55%, #b86d00 100%); box-shadow: 0 0 0 2px #2b3a40, 0 0 0 3px rgb(255 255 255 / 0.25), 0 0 18px 4px rgb(255 178 46 / 0.55), 0 6px 40px 10px rgb(255 178 46 / 0.25); animation: ds-ignite 900ms cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: calc(180ms + var(--i) * 110ms); } @keyframes ds-ignite { 0% { filter: brightness(0.25) saturate(0.4); } 35% { filter: brightness(1.6); } 100% { filter: brightness(1); } } @media (prefers-reduced-motion: reduce) { .ds-lights span { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Lodera y cromo",
+    "overview": "The page is the front of a Mexican tractocamión, read top to bottom: amber clearance lights on the roof, a chrome nameplate headline over a radiator grille of chrome slats, a chrome bumper carrying engine brands, then the cab side and its mud flaps. Every surface is a material that exists on a decorated Mexican truck: cab-paint navy, white cab paint, black mud-flap rubber, polished chrome, HERRAGA red and amber lamp glass. Nothing is a generic \"card\"; containers are plates, bezels, flaps and emblems.\n\nSections alternate between dark cab paint (header, hero, brands, footer), black rubber (the engine catalog), white cab paint (pillars, products, branches) and solid HERRAGA red (the quote form). Density is workshop-legible: big condensed type, large tap targets (3.25rem buttons), short copy. Chrome is the jewelry; it sits on lettering, trim and bezels, and the eye reads it as metal because every chrome gradient reflects a horizon (bright sky, dark horizon line, warm ground).\n\nThe world explicitly refuses the stock parts-store template: dark hero with truck photo and an icon-card grid.",
+    "keyCharacteristics": [
+      "Truck materials, not UI chrome: every container is a nameplate, bezel, mud flap, emblem or bumper.",
+      "Horizon-reflection chrome in three strengths, chosen by whether it carries lettering.",
+      "Condensed uppercase display type for every heading; highway-sign Barlow Condensed for labels and buttons.",
+      "Amber is light: lamps, focus, active switches, matches, and links on dark paint.",
+      "Every section ends near a WhatsApp action; red is the color of that action."
+    ],
+    "rules": [
+      {
+        "name": "The Lettering Decides the Chrome Rule",
+        "body": "If a chrome surface carries text, it uses the text-bearing plate (`--chrome-h`). If it carries none, it uses the trim bar (`--chrome-bar`). The trim bar's dark horizon line would cut straight through lettering.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Means WhatsApp Rule",
+        "body": "A red button opens WhatsApp. The only other red primary in the build is the newsletter submit, which itself falls back to WhatsApp when no list provider is configured; nothing else gets the red plate.",
+        "section": "colors"
+      },
+      {
+        "name": "The Amber Is Light Rule",
+        "body": "Amber appears where a lamp would glow or where something is switched on: lights, focus, the active switch, search matches, links on dark paint. It is never a background field.",
+        "section": "colors"
+      },
+      {
+        "name": "The Live Text Rule",
+        "body": "Chrome lettering is decorative SVG with `aria-hidden`; the same words exist as real heading text. Text never lives only in an image.",
+        "section": "typography"
+      },
+      {
+        "name": "The All-Caps Display Rule",
+        "body": "Every h1–h4 is uppercase Big Shoulders at 850+. Sentence case belongs to body copy and ledes only.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light From Above Rule",
+        "body": "Highlights sit on top edges, shade on bottom edges, and cast shadows fall down. A shadow cast sideways or upward breaks the material.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Recessed Panel Rule",
+        "body": "A dark panel on a light or red field sits inside a polished bezel; it is mounted on the truck, not floating over it.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do build every new container from a truck material: chrome plate, bezelled dark panel, mud-flap rubber, emblem, bumper band.",
+      "Do pick chrome by content: `--chrome-h` under lettering, `--chrome-bar` on bare trim.",
+      "Do keep heading text in the DOM when it is drawn as chrome lettering.",
+      "Do end each section near a red WhatsApp button, and prefill the message with the engine or part when known.",
+      "Do use amber for anything lit, focused, selected or matched.",
+      "Do keep motion short and eased (`cubic-bezier(0.16, 1, 0.3, 1)`, 160–380ms for state, up to 1100ms for the hero entrance), and let `prefers-reduced-motion` collapse it."
+    ],
+    "donts": [
+      "Don't use the stock parts-store template: a dark hero with a truck photo and a grid of icon cards.",
+      "Don't put lettering on the full-strength trim bar or the raw lettering horizon at small sizes; its dark horizon line breaks legibility.",
+      "Don't use the red primary button for anything that is not the WhatsApp channel.",
+      "Don't use amber as a background field or a large fill.",
+      "Don't cast shadows sideways or upward; light comes from above.",
+      "Don't put essential text inside images."
+    ]
+  }
+}

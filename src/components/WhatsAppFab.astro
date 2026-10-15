@@ -3,10 +3,21 @@ import Icon from './Icon.astro';
 import { whatsappHref } from '../data/site';
 ---
 
-<a class="fab" href={whatsappHref()} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+<a class="fab" href={whatsappHref()} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" data-fab>
   <Icon name="whatsapp" />
   <span class="label">¿Buscas una pieza?</span>
 </a>
+
+<script>
+  // Full label while the hero is on screen; past it the button collapses to a disc so it never covers content.
+  const fab = document.querySelector<HTMLElement>('[data-fab]');
+  const hero = document.getElementById('inicio');
+  if (fab && hero) {
+    new IntersectionObserver(([entry]) => fab.classList.toggle('is-compact', !entry.isIntersecting), {
+      threshold: 0.15,
+    }).observe(hero);
+  }
+</script>
 
 <style>
   .fab {
@@ -17,8 +28,10 @@ import { whatsappHref } from '../data/site';
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    min-height: 3.6rem;
-    padding: 0.5rem 1.2rem 0.5rem 0.9rem;
+    height: 3.6rem;
+    max-width: 16rem;
+    padding: 0 1.2rem 0 0.85rem;
+    overflow: hidden;
     border-radius: 999px;
     background: #1faa53;
     color: var(--white);
@@ -26,25 +39,39 @@ import { whatsappHref } from '../data/site';
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 0.04em;
+    white-space: nowrap;
     text-decoration: none;
     box-shadow: 0 0 0 3px rgb(255 255 255 / 0.9), 0 14px 28px -10px rgb(0 0 0 / 0.55);
-    transition: transform 200ms var(--ease-out);
+    transition:
+      transform 200ms var(--ease-out),
+      max-width 380ms var(--ease-out),
+      padding 380ms var(--ease-out);
   }
   .fab:hover {
     transform: translateY(-3px);
   }
   .fab :global(svg) {
+    flex: none;
     width: 1.9rem;
     height: 1.9rem;
   }
+  .label {
+    transition: opacity 200ms;
+  }
+  .fab.is-compact {
+    max-width: 3.6rem;
+    padding: 0 0.85rem;
+  }
+  .fab.is-compact .label {
+    opacity: 0;
+  }
   @media (max-width: 640px) {
     .fab {
-      padding: 0;
-      width: 3.6rem;
-      justify-content: center;
+      max-width: 3.6rem;
+      padding: 0 0.85rem;
     }
     .label {
-      display: none;
+      opacity: 0;
     }
   }
 </style>

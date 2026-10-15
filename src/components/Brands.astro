@@ -1,10 +1,14 @@
 ---
+import ChromeLetters from './ChromeLetters.astro';
 import { engineBrands, partBrands } from '../data/site';
 ---
 
 <section id="marcas" class="brands" aria-labelledby="marcas-title">
   <div class="wrap">
-    <h2 id="marcas-title" class="section-title chrome">Las mejores marcas</h2>
+    <h2 id="marcas-title" class="section-title">
+      <span class="visually-hidden">Las mejores marcas</span>
+      <ChromeLetters class="title-art" lines={['LAS MEJORES MARCAS']} width={1290} size={150} style="--title-art-max: 52rem" />
+    </h2>
 
     <div class="groups">
       <div class="group">
