@@ -7,13 +7,12 @@ import { heroBrands, whatsappHref } from '../data/site';
 ---
 
 <section id="inicio" class="hero" aria-labelledby="hero-title">
-  <!-- Cab from the original banner, tinted to the brand navy. Only a 560 px crop was usable, so it is
-       softened on purpose; replace the file with the original truck photo for a sharper result. -->
+  <!-- Cab from the original banner (a 560 px crop, AI-upscaled), tinted to the brand navy. -->
   <Image
     class="backdrop"
     src={cabPhoto}
     alt=""
-    widths={[720, 1080, 1440]}
+    widths={[720, 1080, 1440, 1920, 2400]}
     sizes="100vw"
     loading="eager"
     fetchpriority="high"
