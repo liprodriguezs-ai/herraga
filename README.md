@@ -15,12 +15,12 @@ Static landing for [herraga.com](https://herraga.com), built with Astro 7. It re
 
 ## Deploy
 
-Production runs on Cloudflare Workers (static assets) as the Worker `herraga-landing` (account li.prodriguezs), served at https://herraga.novarek.mx and auto-deployed by Workers Builds on every push to the production branch (currently `landing-redesign`; switch it to `main` in the Worker's Builds settings once `main` exists). Dashboard settings for the Worker's Builds section:
+Production runs on Cloudflare Workers (static assets) as the Worker `herraga-landing` (account li.prodriguezs), served at https://herraga.novarek.mx and auto-deployed by Workers Builds on every push to the production branch `main`. Dashboard settings for the Worker's Builds section:
 
 | Setting | Value |
 | --- | --- |
 | Repository | `liprodriguezs-ai/herraga` |
-| Production branch | `landing-redesign` (move to `main` later) |
+| Production branch | `main` |
 | Build command | `npm run build` (builds only) |
 | Deploy command | `npm run deploy` (`wrangler deploy`, publishes only) |
 | Root directory | `/` |
