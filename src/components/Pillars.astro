@@ -5,7 +5,7 @@ import Filete from './Filete.astro';
 import { pillars, branches, whatsappHref, telHref, NATIONAL_PHONE, SERVICE_PHONE, formatPhone } from '../data/site';
 import garantia from '../assets/sections/garantia.jpg';
 import asesoria from '../assets/sections/asesoria.jpg';
-import envios from '../assets/sections/envios.jpg';
+import envios from '../assets/sections/envios.png';
 import pagos from '../assets/sections/pagos.jpg';
 
 const images = { garantia, asesoria, envios, pagos };
@@ -47,6 +47,7 @@ const pointIcons: Record<string, string> = {
               alt={p.imageAlt}
               widths={[400, 640, 760, 960, 1280]}
               sizes="(max-width: 860px) calc(100vw - 3.5rem), (max-width: 1340px) 48vw, 640px"
+              quality={p.image === 'envios' ? 90 : undefined}
               loading="lazy"
             />
           </div>
