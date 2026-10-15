@@ -10,6 +10,10 @@ import pagos from '../assets/sections/pagos.jpg';
 
 const images = { garantia, asesoria, envios, pagos };
 
+// Branch dial strip + contact bars under the shipping image (flyer layout). Hidden for now;
+// set to true to show it again. While hidden, the shipping pillar keeps its regular call button.
+const SHOW_SHIPPING_DIAL = false;
+
 const pointIcons: Record<string, string> = {
   'Pago con tarjeta': 'card',
   'Transferencia bancaria': 'bank',
@@ -60,7 +64,7 @@ const pointIcons: Record<string, string> = {
                 ))}
               </ul>
             )}
-            {p.id !== 'envios' && (
+            {(p.id !== 'envios' || !SHOW_SHIPPING_DIAL) && (
               <div class="ctas">
                 {p.cta.kind === 'whatsapp' ? (
                   <a class="btn btn--primary" href={whatsappHref()} target="_blank" rel="noopener">
@@ -76,7 +80,7 @@ const pointIcons: Record<string, string> = {
               </div>
             )}
           </div>
-          {p.id === 'envios' && (
+          {SHOW_SHIPPING_DIAL && p.id === 'envios' && (
             <div class="dial">
               <h4 class="dial-title">Nuestras sucursales</h4>
               <ul class="dial-list">
