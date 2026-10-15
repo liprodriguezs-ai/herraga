@@ -75,6 +75,7 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? '';
 
 <script>
   import { whatsappHref } from '../data/site';
+  import { track } from '../lib/track';
 
   const root = document.querySelector<HTMLElement>('[data-contact]');
   if (root) {
@@ -152,6 +153,7 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? '';
           v('mensaje'),
           data.get('suscripcion') ? 'Quiero suscribirme a promociones.' : '',
         ].filter(Boolean);
+        track('contact_form_submit', { channel: 'whatsapp', subscribe: Boolean(data.get('suscripcion')) });
         window.open(whatsappHref(lines.join('\n')), '_blank', 'noopener');
         say('Abrimos WhatsApp con tu mensaje listo para enviar.', 'ok');
         return;
@@ -162,6 +164,7 @@ const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? '';
       try {
         const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
         if (!res.ok) throw new Error(String(res.status));
+        track('contact_form_submit', { channel: 'email', subscribe: Boolean(data.get('suscripcion')) });
         form.reset();
         say('¡Gracias! Recibimos tu mensaje y un asesor te contactará pronto.', 'ok');
       } catch {

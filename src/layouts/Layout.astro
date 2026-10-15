@@ -14,6 +14,7 @@ import fontLabel700 from '@fontsource/barlow-condensed/files/barlow-condensed-la
 const criticalFonts = [fontDisplay, fontBody, fontLabel600, fontLabel700];
 import {
   SITE_URL,
+  GTM_ID,
   company,
   NATIONAL_PHONE,
   branches,
@@ -108,6 +109,20 @@ const jsonLd = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Tag Manager -->
+    <script is:inline define:vars={{ gtmId: GTM_ID }}>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', gtmId);
+    </script>
+    <!-- End Google Tag Manager -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -143,6 +158,16 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+        title="Google Tag Manager"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <Fragment set:html={`<!--
 THESIS: HERRAGA's landing is the front of a Mexican tractocamión, not a parts-store template; it refuses the stock dark hero + truck photo + icon-card grid.
 OWN-WORLD: cab-paint navy, polished chrome trim lettering, amber clearance lights, HERRAGA red, black mud-flap rubber with riveted chrome engine tags, hand-painted filete pinstripes; Big Shoulders Display + highway-sign Barlow.
@@ -153,5 +178,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 -->`} />
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <slot />
+    <script>
+      import { trackContactLinks } from '../lib/track';
+      trackContactLinks();
+    </script>
   </body>
 </html>

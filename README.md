@@ -50,6 +50,19 @@ The subscription form posts `nombre`, `email` and a `_gotcha` honeypot as `multi
 
 The floating button opens the contact panel from the original site (Nombre, Correo electrónico, ¿Cómo te podemos ayudar?, subscription checkbox) plus a direct WhatsApp link. It posts `nombre`, `email`, `mensaje`, `suscripcion` and `_gotcha` the same way as the newsletter, to `PUBLIC_CONTACT_ENDPOINT`. Without an endpoint, submitting opens WhatsApp with the message prefilled.
 
+## Analytics
+
+Google Tag Manager (container `GTM_ID` in `src/data/site.ts`) loads on every page; GA4 and any ad tags are configured inside GTM, not in this code. The site pushes these events to the `dataLayer` (`src/lib/track.ts`):
+
+| Event | When | Parameters |
+| --- | --- | --- |
+| `whatsapp_click` | Any `wa.me` / `api.whatsapp.com` link is clicked | `link_location` (nearest section id), `link_text` |
+| `phone_click` | Any `tel:` link is clicked | `link_location`, `phone_number` |
+| `quote_form_submit` | The quote form passes validation and opens WhatsApp | `channel` |
+| `contact_form_submit` | The floating contact form is sent | `channel` (`whatsapp` or `email`), `subscribe` |
+
+In GTM, create a Custom Event trigger per event name and a GA4 Event tag for each, then mark them as key events in GA4.
+
 ## Editing content
 
 All copy, phones, branches, engine lists and social links live in `src/data/site.ts`. Images live in `src/assets/` and are optimized at build time (WebP, responsive sizes).

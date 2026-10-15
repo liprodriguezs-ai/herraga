@@ -66,6 +66,7 @@ import { NATIONAL_PHONE, formatPhone, telHref } from '../data/site';
 
 <script>
   import { whatsappHref } from '../data/site';
+  import { track } from '../lib/track';
 
   const form = document.querySelector<HTMLFormElement>('[data-quote]');
   form?.addEventListener('submit', (e) => {
@@ -89,6 +90,7 @@ import { NATIONAL_PHONE, formatPhone, telHref } from '../data/site';
       `Motor: ${v('motor')}`,
       v('comentarios') && `Comentarios: ${v('comentarios')}`,
     ].filter(Boolean);
+    track('quote_form_submit', { channel: 'whatsapp' });
     window.open(whatsappHref(lines.join('\n')), '_blank', 'noopener');
   });
 

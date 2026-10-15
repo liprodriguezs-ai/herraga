@@ -5,6 +5,9 @@
 // Canonical origin. herraga.com (apex) forwards here from GoDaddy; www is served by Cloudflare.
 export const SITE_URL = 'https://www.herraga.com';
 
+// Google Tag Manager container (owned by HERRAGA). GA4 and any other tags are configured inside GTM.
+export const GTM_ID = 'GTM-T7RF9SK2';
+
 export const company = {
   name: 'HERRAGA',
   brand: 'HERRAGA Refacciones',
