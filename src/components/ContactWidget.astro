@@ -1,0 +1,428 @@
+---
+// Floating contact widget. Mirrors the original herraga.com (GoDaddy) messaging form:
+// name, email, message, optional subscription checkbox. Sends to PUBLIC_CONTACT_ENDPOINT
+// (Formspree-style form endpoint); without one configured it hands the message to WhatsApp.
+import Icon from './Icon.astro';
+import { whatsappHref } from '../data/site';
+
+const endpoint = import.meta.env.PUBLIC_CONTACT_ENDPOINT ?? '';
+---
+
+<div class="contact" data-contact data-endpoint={endpoint}>
+  <section
+    id="contact-panel"
+    class="panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="contact-title"
+    hidden
+    data-panel
+  >
+    <header class="panel-head">
+      <h2 id="contact-title">HERRAGA</h2>
+      <button class="close" type="button" aria-label="Cerrar" data-close>
+        <Icon name="close" />
+      </button>
+    </header>
+
+    <div class="panel-body">
+      <p class="bubble">¡Hola! Haznos saber cómo te podemos ayudar.</p>
+
+      <a class="wa" href={whatsappHref()} target="_blank" rel="noopener">
+        <Icon name="whatsapp" />
+        Escríbenos por WhatsApp
+      </a>
+
+      <form class="form" novalidate data-form>
+        <div class="field">
+          <label for="c-name">Nombre <span class="req" aria-hidden="true">*</span></label>
+          <input id="c-name" name="nombre" autocomplete="name" required aria-describedby="c-name-err" />
+          <p class="err" id="c-name-err" data-err="nombre">Escribe tu nombre.</p>
+        </div>
+        <div class="field">
+          <label for="c-email">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
+          <input id="c-email" name="email" type="email" autocomplete="email" required aria-describedby="c-email-err" />
+          <p class="err" id="c-email-err" data-err="email">Escribe un correo válido, por ejemplo nombre@empresa.com.</p>
+        </div>
+        <div class="field">
+          <label for="c-message">¿Cómo te podemos ayudar? <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="c-message" name="mensaje" rows="3" required aria-describedby="c-message-err"></textarea>
+          <p class="err" id="c-message-err" data-err="mensaje">Cuéntanos qué refacción o motor buscas.</p>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="suscripcion" value="si" />
+          <span>Suscríbete para recibir actualizaciones, promociones y mucho más.</span>
+        </label>
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="btn btn--primary send" type="submit" data-send>Enviar</button>
+        <p class="status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </div>
+  </section>
+
+  <button
+    class="fab"
+    type="button"
+    aria-controls="contact-panel"
+    aria-expanded="false"
+    data-toggle
+  >
+    <Icon name="message" class="i-open" />
+    <Icon name="close" class="i-close" />
+    <span class="label">¿Buscas una pieza?</span>
+  </button>
+</div>
+
+<script>
+  import { whatsappHref } from '../data/site';
+
+  const root = document.querySelector<HTMLElement>('[data-contact]');
+  if (root) {
+    const panel = root.querySelector<HTMLElement>('[data-panel]')!;
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toggle]')!;
+    const form = root.querySelector<HTMLFormElement>('[data-form]')!;
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const send = root.querySelector<HTMLButtonElement>('[data-send]')!;
+    const endpoint = root.dataset.endpoint ?? '';
+
+    const setOpen = (open: boolean) => {
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      root.classList.toggle('is-open', open);
+      if (open) (form.querySelector('input') as HTMLInputElement | null)?.focus();
+    };
+
+    toggle.addEventListener('click', () => setOpen(panel.hidden));
+    root.querySelector('[data-close]')?.addEventListener('click', () => {
+      setOpen(false);
+      toggle.focus();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    // Full label while the hero is visible; past it the button collapses to a disc so it never covers content.
+    const hero = document.getElementById('inicio');
+    if (hero) {
+      new IntersectionObserver(([entry]) => root.classList.toggle('is-compact', !entry.isIntersecting), {
+        threshold: 0.15,
+      }).observe(hero);
+    }
+
+    const say = (msg: string, tone: 'ok' | 'error' | '') => {
+      status.textContent = msg;
+      status.dataset.tone = tone;
+    };
+
+    const validate = () => {
+      let first: HTMLInputElement | HTMLTextAreaElement | null = null;
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]').forEach((el) => {
+        const ok = el.value.trim() !== '' && (el.type !== 'email' || (el as HTMLInputElement).validity.valid);
+        el.setAttribute('aria-invalid', String(!ok));
+        form.querySelector(`[data-err="${el.name}"]`)?.classList.toggle('is-shown', !ok);
+        if (!ok && !first) first = el;
+      });
+      if (first) (first as HTMLElement).focus();
+      return !first;
+    };
+
+    form.addEventListener('input', (e) => {
+      const el = e.target as HTMLInputElement;
+      if (el.getAttribute('aria-invalid') === 'true' && el.value.trim()) {
+        el.setAttribute('aria-invalid', 'false');
+        form.querySelector(`[data-err="${el.name}"]`)?.classList.remove('is-shown');
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      say('', '');
+      if (!validate()) return;
+
+      const data = new FormData(form);
+      const v = (k: string) => String(data.get(k) ?? '').trim();
+
+      if (!endpoint) {
+        // No form service configured yet: hand the message to an advisor on WhatsApp.
+        const lines = [
+          `Hola HERRAGA, soy ${v('nombre')} (${v('email')}).`,
+          v('mensaje'),
+          data.get('suscripcion') ? 'Quiero suscribirme a promociones.' : '',
+        ].filter(Boolean);
+        window.open(whatsappHref(lines.join('\n')), '_blank', 'noopener');
+        say('Abrimos WhatsApp con tu mensaje listo para enviar.', 'ok');
+        return;
+      }
+
+      send.disabled = true;
+      send.textContent = 'Enviando…';
+      try {
+        const res = await fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        say('¡Gracias! Recibimos tu mensaje y un asesor te contactará pronto.', 'ok');
+      } catch {
+        say('No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.', 'error');
+      } finally {
+        send.disabled = false;
+        send.textContent = 'Enviar';
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact {
+    position: fixed;
+    right: clamp(1rem, 3vw, 1.75rem);
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.9rem;
+  }
+
+  .fab {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: 3.6rem;
+    max-width: 16rem;
+    padding: 0 1.2rem 0 0.95rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: 999px;
+    background: var(--red);
+    color: var(--white);
+    font-family: var(--font-label);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px rgb(255 255 255 / 0.9), 0 14px 28px -10px rgb(0 0 0 / 0.55);
+    transition:
+      transform 200ms var(--ease-out),
+      max-width 380ms var(--ease-out),
+      padding 380ms var(--ease-out);
+  }
+  .fab:hover {
+    transform: translateY(-3px);
+  }
+  .fab :global(svg) {
+    flex: none;
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+  .fab :global(.i-close) {
+    display: none;
+  }
+  .is-open .fab :global(.i-open) {
+    display: none;
+  }
+  .is-open .fab :global(.i-close) {
+    display: block;
+  }
+  .label {
+    transition: opacity 200ms;
+  }
+  .is-compact .fab,
+  .is-open .fab {
+    max-width: 3.6rem;
+    padding: 0 0.95rem;
+  }
+  .is-compact .label,
+  .is-open .label {
+    opacity: 0;
+  }
+
+  .panel {
+    width: min(22.5rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 7rem);
+    overflow: auto;
+    border-radius: 14px;
+    background: var(--white);
+    color: var(--ink);
+    box-shadow: 0 0 0 4px #c9d2d7, 0 0 0 6px #5c6a71, 0 30px 60px -20px rgb(4 29 39 / 0.6);
+    transform-origin: bottom right;
+    animation: pop 220ms var(--ease-out);
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+
+  .panel-head {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1rem 0.9rem 1.2rem;
+    background: var(--cab-deep);
+    color: var(--white);
+  }
+  .panel-head h2 {
+    font-size: 1.6rem;
+    letter-spacing: 0.02em;
+  }
+  .close {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--white);
+    cursor: pointer;
+  }
+  .close:hover {
+    background: rgb(255 255 255 / 0.1);
+  }
+  .close :global(svg) {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .panel-body {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.1rem 1.2rem 1.3rem;
+  }
+  .bubble {
+    position: relative;
+    padding: 0.8rem 1rem;
+    border-radius: 10px 10px 10px 2px;
+    background: var(--paint-2);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .wa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.9rem;
+    border-radius: var(--radius);
+    background: #1faa53;
+    color: var(--white);
+    font-family: var(--font-label);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .wa:hover {
+    background: #1b964a;
+  }
+  .wa :global(svg) {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .form {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .field {
+    display: grid;
+    gap: 0.3rem;
+  }
+  .form label:not(.check) {
+    font-family: var(--font-label);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cab);
+  }
+  .req {
+    color: var(--red);
+  }
+  input:not([type='checkbox']),
+  textarea {
+    width: 100%;
+    min-height: 2.9rem;
+    padding: 0.6rem 0.8rem;
+    border: 2px solid var(--paint-2);
+    border-radius: var(--radius);
+    background: var(--paint);
+    color: var(--ink);
+    font: 500 1rem/1.35 var(--font-body);
+  }
+  textarea {
+    resize: vertical;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--cab);
+  }
+  [aria-invalid='true'] {
+    border-color: var(--red) !important;
+  }
+  .err {
+    display: none;
+    font-size: 0.9rem;
+    color: var(--red-deep);
+  }
+  .err.is-shown {
+    display: block;
+  }
+  .check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .check input {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.15rem;
+    accent-color: var(--red);
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+  }
+  .send {
+    width: 100%;
+  }
+  .status {
+    min-height: 1.2em;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+  .status[data-tone='ok'] {
+    color: #157a3b;
+  }
+  .status[data-tone='error'] {
+    color: var(--red-deep);
+  }
+
+  @media (max-width: 640px) {
+    .fab {
+      max-width: 3.6rem;
+      padding: 0 0.95rem;
+    }
+    .label {
+      opacity: 0;
+    }
+  }
+</style>

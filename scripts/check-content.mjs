@@ -57,6 +57,8 @@ const required = [
   'D12', 'D13', 'MP8', 'OM 366', 'OM 460', 'OM 904/924', 'OM 906/926',
   'DT 466', 'DT 360', 'DT 530', 'Ford-Navistar', 'Super-Duty F250-F550', '7.3L', '6.7L', '6.4L', '6.0L',
   'Caterpillar', 'C15', 'C15-BT', '3406E', 'C15/3406E', 'C10/C12', 'C11/C13', 'Hino', 'J05E', 'Ceja de 3 mm', 'Ceja de 8 mm',
+  '¡Hola! Haznos saber cómo te podemos ayudar.', '¿Cómo te podemos ayudar?',
+  'Suscríbete para recibir actualizaciones, promociones y mucho más.',
 ];
 
 const links = [
