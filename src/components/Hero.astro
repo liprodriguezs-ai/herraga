@@ -123,18 +123,7 @@ import { heroBrands, whatsappHref, company } from '../data/site';
     max-width: 44rem;
     height: auto;
     overflow: visible;
-    /* Compositor-only entrance (opacity + transform): no repaint while it plays. */
-    animation: nameplate 900ms var(--ease-out) 600ms both;
-  }
-  @keyframes nameplate {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+    /* No entrance animation: the headline is part of the first paint (it can be the LCP element). */
   }
   .subline {
     display: block;

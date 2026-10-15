@@ -6,6 +6,12 @@ import '@fontsource/barlow/600.css';
 import '@fontsource/barlow-condensed/600.css';
 import '@fontsource/barlow-condensed/700.css';
 import '../styles/global.css';
+// Fonts used in the first viewport, preloaded so text does not reflow (and shift the CTAs) when they arrive.
+import fontDisplay from '@fontsource-variable/big-shoulders-display/files/big-shoulders-display-latin-wght-normal.woff2?url';
+import fontBody from '@fontsource/barlow/files/barlow-latin-400-normal.woff2?url';
+import fontLabel600 from '@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2?url';
+import fontLabel700 from '@fontsource/barlow-condensed/files/barlow-condensed-latin-700-normal.woff2?url';
+const criticalFonts = [fontDisplay, fontBody, fontLabel600, fontLabel700];
 import {
   SITE_URL,
   company,
@@ -111,6 +117,7 @@ const jsonLd = {
     <meta name="format-detection" content="telephone=yes" />
     <meta name="geo.region" content="MX" />
 
+    {criticalFonts.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
     <link rel="preload" as="image" href="/grille.svg" type="image/svg+xml" fetchpriority="high" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
