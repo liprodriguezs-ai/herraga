@@ -83,9 +83,15 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <p class="legal">
-      Copyright © {year} {company.legalName} – Todos los derechos reservados.
-    </p>
+    <div class="legal">
+      <p>Copyright © {year} {company.legalName} – Todos los derechos reservados.</p>
+      <p class="credit">
+        Powered by
+        <a href="https://novarek.mx/" target="_blank" rel="noopener">
+          <img src="/novarek-logo.svg" width="284" height="48" alt="Novarek" loading="lazy" decoding="async" />
+        </a>
+      </p>
+    </div>
   </div>
 </footer>
 
@@ -310,6 +316,29 @@ const year = new Date().getFullYear();
     border-top: 1px solid rgb(255 255 255 / 0.08);
     font-size: 0.9rem;
     color: #8ea2ab;
+    display: flex;
+    flex-wrap: wrap;
+    /* Left-aligned so the floating contact button (fixed bottom-right) never covers the credit. */
+    gap: 0.5rem 1.5rem;
+  }
+  .credit {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .credit a {
+    display: inline-flex;
+    border-radius: 4px;
+    opacity: 0.85;
+    transition: opacity 180ms var(--ease-out);
+  }
+  .credit a:hover,
+  .credit a:focus-visible {
+    opacity: 1;
+  }
+  .credit img {
+    width: auto;
+    height: 1.25rem;
   }
 
   @media (max-width: 1000px) {
